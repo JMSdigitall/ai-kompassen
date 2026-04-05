@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-kompassen – bibliotekschefer 22 april 2025</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+
+:root {
+  --teal:       #064564;
+  --teal-light: #e0eff6;
+  --malva:      #825a6e;
+  --malva-l:    #f3eaee;
+  --sand:       #ceac86;
+  --sand-l:     #faf4ed;
+  --gra:        #6a5e5e;
+  --off:        #faf8f5;
+  --border:     #e0d5d5;
+  --text:       #2c2020;
+  --muted:      #8a7878;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--off); color: var(--text); min-height: 100vh; font-size: 15px; line-height: 1.6; }
+
+/* ── HEADER ── */
+header {
+  background: var(--teal); color: #fff;
+  padding: 1.1rem 1.5rem 0;
+  position: sticky; top: 0; z-index: 200;
+  border-bottom: 3px solid var(--sand);
+}
+.hrow {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap; padding-bottom: .55rem;
+}
+header h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.15rem,2.5vw,1.6rem); font-weight: 400; letter-spacing: -.01em; }
+header p  { font-size: .7rem; opacity: .6; margin-top: 2px; }
+.live-dot { display:flex;align-items:center;gap:6px;font-size:.68rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:4px 11px;border-radius:20px; }
+.pulse { width:6px;height:6px;background:#7de8b8;border-radius:50%;animation:pulse 1.8s ease-in-out infinite; }
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)}}
+
+/* ── TABS ── */
+.tabbar { max-width:1100px;margin:0 auto;display:flex;gap:2px;padding-top:.3rem; }
+.tbtn {
+  background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.65);
+  font-family:'DM Sans',sans-serif;font-size:.76rem;font-weight:400;
+  padding:.5rem 1.1rem;border-radius:8px 8px 0 0;cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.tbtn:hover { background:rgba(255,255,255,.14);color:#fff; }
+.tbtn.active { background:var(--off);color:var(--teal);font-weight:500; }
+
+/* secondary tab label */
+.tbtn.secondary { opacity:.75;font-size:.7rem; }
+.tbtn.secondary.active { opacity:1; }
+
+main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
+.panel { display:none; }
+.panel.active { display:block; }
+
+/* ══════════════════════════════════════
+   PANEL 1 – RÖSTNINGSMATRIS
+══════════════════════════════════════ */
+.sumbar {
+  background:#fff;border:1.5px solid var(--border);border-radius:13px;
+  padding:.9rem 1.3rem;margin-bottom:1.1rem;
+  display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;
+}
+.snum { font-family:'DM Serif Display',serif;font-size:1.45rem;color:var(--teal);display:block; }
+.slbl { font-size:.64rem;color:var(--muted); }
+.sdiv { width:1px;height:34px;background:var(--border); }
+.stxt { flex:1;min-width:160px;font-size:.72rem;color:var(--muted);line-height:1.5; }
+.stxt strong { color:var(--text);font-weight:500; }
+.rbtn { background:none;border:1px solid var(--border);color:var(--muted);font-size:.66rem;font-family:'DM Sans',sans-serif;padding:4px 12px;border-radius:20px;cursor:pointer;transition:all .15s;margin-left:auto; }
+.rbtn:hover { border-color:var(--malva);color:var(--malva); }
+
+.chead { display:grid;grid-template-columns:108px repeat(3,1fr);gap:6px;margin-bottom:6px; }
+.ch { padding:10px 11px;border-radius:8px 8px 0 0;font-size:.73rem;font-weight:500;text-align:center;line-height:1.4; }
+.chico { font-size:1rem;display:block;margin-bottom:1px; }
+.chsub { font-size:.63rem;opacity:.65;font-weight:300; }
+.ch1{background:var(--teal-light);color:var(--teal);}
+.ch2{background:var(--sand-l);color:#7a5a2a;}
+.ch3{background:var(--malva-l);color:var(--malva);}
+
+.mrow { display:grid;grid-template-columns:108px repeat(3,1fr);gap:6px;margin-bottom:6px; }
+.rlbl { display:flex;flex-direction:column;justify-content:center;align-items:flex-end;padding:10px 11px 10px 0;text-align:right; }
+.rlbl-t { font-family:'DM Serif Display',serif;font-size:.9rem;color:var(--text);line-height:1.2; }
+.rlbl-s { font-size:.62rem;color:var(--muted);margin-top:2px; }
+
+.mcell { background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:12px;position:relative;transition:border-color .2s; }
+.mcell:hover { border-color:var(--sand); }
+.mcell.top { outline:2.5px solid var(--sand); }
+.topbadge { position:absolute;top:-8px;right:9px;background:var(--sand);color:#5a3a10;font-size:.56rem;font-weight:500;padding:1px 7px;border-radius:6px;letter-spacing:.04em; }
+.ct { font-size:.72rem;font-weight:500;color:var(--text);margin-bottom:5px;line-height:1.4; }
+.cqs { list-style:none;margin-bottom:8px; }
+.cqs li { font-size:.66rem;color:var(--muted);line-height:1.5;padding:2px 0 2px 8px;position:relative; }
+.cqs li::before { content:'→';position:absolute;left:0;color:var(--sand);font-size:.58rem;top:4px; }
+.dtag { display:inline-block;font-size:.58rem;padding:1px 5px;border-radius:3px;background:var(--off);border:1px solid var(--border);color:var(--muted); }
+.vsec { margin-top:9px;padding-top:9px;border-top:1px solid var(--border); }
+.vprompt { font-size:.63rem;color:var(--muted);margin-bottom:6px; }
+.vopts { display:flex;flex-direction:column;gap:4px; }
+.vopt { display:flex;align-items:center;gap:6px;cursor:pointer; }
+.vbtn { width:19px;height:19px;border-radius:50%;border:2px solid var(--border);background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:.52rem;color:transparent; }
+.vbtn.voted { background:var(--teal);border-color:var(--teal);color:#fff; }
+.vlbl { font-size:.65rem;color:var(--muted);flex:1;line-height:1.3; }
+.bars { margin-top:7px; }
+.brow { display:flex;align-items:center;gap:4px;margin-bottom:3px; }
+.blbl { font-size:.58rem;color:var(--muted);width:68px;flex-shrink:0;line-height:1.2; }
+.btrack { flex:1;height:5px;background:var(--off);border-radius:3px;overflow:hidden;border:1px solid var(--border); }
+.bfill { height:100%;border-radius:3px;transition:width .4s ease; }
+.bt{background:var(--teal);}.bs{background:var(--sand);}.bm{background:var(--malva);}
+.bcnt { font-size:.58rem;color:var(--muted);width:18px;text-align:right; }
+
+/* ══════════════════════════════════════
+   PANEL 2 – KUNSKAPSUNDERLAG
+══════════════════════════════════════ */
+
+/* accordion */
+.accordion { margin-bottom:.8rem; }
+.acc-hdr {
+  width:100%;background:#fff;border:1.5px solid var(--border);
+  border-radius:11px;padding:.9rem 1.1rem;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:border-color .2s;text-align:left;
+  font-family:'DM Sans',sans-serif;
+}
+.acc-hdr:hover { border-color:var(--sand); }
+.acc-hdr.open { border-radius:11px 11px 0 0;border-color:var(--teal); }
+.acc-title { font-size:.85rem;font-weight:500;color:var(--text); }
+.acc-sub   { font-size:.7rem;color:var(--muted);margin-top:2px; }
+.acc-arrow { font-size:.8rem;color:var(--muted);transition:transform .2s;flex-shrink:0;margin-left:.8rem; }
+.acc-hdr.open .acc-arrow { transform:rotate(180deg); }
+.acc-body {
+  display:none;background:#fff;
+  border:1.5px solid var(--teal);border-top:none;
+  border-radius:0 0 11px 11px;padding:1.1rem 1.2rem;
+}
+.acc-body.open { display:block; }
+
+/* area cards inside accordion */
+.area-grid { display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1rem; }
+@media(max-width:700px){ .area-grid { grid-template-columns:1fr 1fr; } }
+.acard { border-radius:10px;padding:12px 11px 10px;border:1.5px solid transparent;cursor:pointer;transition:all .2s; }
+.acard:hover { filter:brightness(.96); }
+.acard.sel { outline:2.5px solid var(--teal); }
+.anum { font-size:.62rem;font-weight:500;margin-bottom:3px;opacity:.7; }
+.atit { font-size:.74rem;font-weight:500;line-height:1.35; }
+.asub { font-size:.6rem;margin-top:4px;opacity:.6;line-height:1.5; }
+.a1{background:#e1f5ee;color:#085041;}.a2{background:#eeedfe;color:#26215c;}
+.a3{background:#faeeda;color:#412402;}.a4{background:#fbeaf0;color:#4b1528;}
+.a5{background:#e6f1fb;color:#042c53;}
+
+.detpane { background:var(--off);border-radius:9px;padding:.9rem 1rem;margin-top:.2rem; }
+.detpane h4 { font-size:.82rem;font-weight:500;margin-bottom:.35rem; }
+.detpane p  { font-size:.74rem;color:var(--muted);margin-bottom:.7rem;line-height:1.6; }
+.comp-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:7px; }
+.citem { background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px 10px; }
+.citem strong { display:block;font-size:.7rem;font-weight:500;color:var(--text);margin-bottom:2px; }
+.citem span   { font-size:.66rem;color:var(--muted);line-height:1.45; }
+.aie { display:inline-block;font-size:.56rem;padding:1px 5px;border-radius:3px;background:var(--teal);color:#e1f5ee;font-weight:500;margin-left:3px; }
+.aii { display:inline-block;font-size:.56rem;padding:1px 5px;border-radius:3px;background:var(--sand-l);color:#7a5a2a;border:1px solid var(--sand);font-weight:500;margin-left:3px; }
+
+/* levels inside accordion */
+.lvl-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:1rem; }
+@media(max-width:660px){ .lvl-grid { grid-template-columns:1fr 1fr; } }
+.lcard { border-radius:10px;overflow:hidden;border:1.5px solid var(--border); }
+.lhd { padding:9px 12px;font-size:.73rem;font-weight:500; }
+.lbd { padding:9px 12px;font-size:.7rem;color:var(--muted);line-height:1.6; }
+.ltag { display:inline-block;background:var(--off);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:.58rem;margin-top:3px;color:var(--muted); }
+.lh1{background:#d3f5e9;color:#085041;} .lh2{background:#faeeda;color:#7a5a2a;border-bottom:2px solid var(--sand);}
+.lh3{background:var(--malva-l);color:#4b1528;border-bottom:2px solid var(--malva);} .lh4{background:var(--teal);color:#e1f5ee;}
+
+.ai-note { background:var(--teal-light);border:1px solid #b8d8e8;border-radius:9px;padding:.9rem 1rem;margin-top:.5rem; }
+.ai-badges { display:flex;gap:.8rem;flex-wrap:wrap;margin:.4rem 0 .6rem; }
+.badge-row { display:flex;align-items:center;gap:5px;font-size:.7rem;color:var(--muted); }
+.ai-note p { font-size:.73rem;color:var(--teal);line-height:1.65; }
+
+.slabel { font-size:.63rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:.5rem; }
+
+/* intro text in kunskapsunderlag */
+.ku-intro { background:#fff;border:1.5px solid var(--border);border-radius:11px;padding:.9rem 1.1rem;margin-bottom:1rem;font-size:.76rem;color:var(--muted);line-height:1.65; }
+.ku-intro strong { color:var(--text);font-weight:500; }
+
+/* ══════════════════════════════════════
+   PANEL 3 – PROGRAM
+══════════════════════════════════════ */
+.prog-intro { font-size:.76rem;color:var(--muted);line-height:1.65;margin-bottom:1.2rem; }
+.prog-list { display:flex;flex-direction:column;gap:8px; }
+
+.seq-card {
+  background:#fff;border:1.5px solid var(--border);border-radius:12px;
+  padding:1rem 1.2rem;display:grid;
+  grid-template-columns:80px 1fr;gap:0 1rem;
+  transition:border-color .2s;
+}
+.seq-card.now {
+  border-color:var(--sand);
+  box-shadow:0 0 0 2px var(--sand);
+}
+.seq-card.past { opacity:.5; }
+.seq-card.break { background:var(--off);border-style:dashed; }
+.seq-card.break.now { border-style:solid; }
+
+.seq-time {
+  font-size:.72rem;font-weight:500;color:var(--muted);
+  padding-top:.15rem;line-height:1.3;
+}
+.seq-now-badge {
+  display:none;font-size:.56rem;font-weight:500;
+  background:var(--sand);color:#5a3a10;
+  padding:1px 6px;border-radius:5px;letter-spacing:.04em;
+  margin-top:4px;width:fit-content;
+}
+.seq-card.now .seq-now-badge { display:block; }
+
+.seq-body {}
+.seq-nr { font-size:.62rem;color:var(--muted);margin-bottom:2px; }
+.seq-title { font-size:.85rem;font-weight:500;color:var(--text);line-height:1.3;margin-bottom:.3rem; }
+.seq-card.break .seq-title { font-weight:400;color:var(--muted); }
+.seq-desc { font-size:.72rem;color:var(--muted);line-height:1.55; }
+.seq-tag {
+  display:inline-block;margin-top:.5rem;
+  font-size:.6rem;padding:2px 7px;border-radius:4px;
+  background:var(--teal-light);color:var(--teal);
+}
+.seq-card.break .seq-tag { background:var(--off);color:var(--muted);border:1px solid var(--border); }
+
+.seq-card.clickable { cursor:pointer; }
+.seq-card.clickable:hover { border-color:var(--sand); }
+.seq-title-row { display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem; }
+.seq-arrow { font-size:.65rem;color:var(--muted);margin-top:.2rem;flex-shrink:0;transition:transform .2s; }
+
+.seq-qs { margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border); }
+.seq-qs-label { font-size:.62rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.45rem; }
+.seq-qs-list { list-style:none;display:flex;flex-direction:column;gap:.35rem; }
+.seq-qs-list li { font-size:.74rem;color:var(--text);line-height:1.5;padding-left:1rem;position:relative; }
+.seq-qs-list li::before { content:'→';position:absolute;left:0;color:var(--sand);font-size:.65rem;top:.15rem; }
+
+@media(max-width:660px){
+  .chead,.mrow { grid-template-columns:70px repeat(3,1fr);gap:4px; }
+  .mcell { padding:7px; }
+  .cqs { display:none; }
+}
+
+/* ── MODAL ── */
+.modal-backdrop {
+  position:fixed;inset:0;background:rgba(6,26,40,.55);
+  z-index:1000;display:flex;align-items:center;justify-content:center;
+  padding:1rem;backdrop-filter:blur(2px);
+}
+.modal-backdrop.hidden { display:none; }
+.modal {
+  background:#fff;border-radius:18px;
+  max-width:520px;width:100%;
+  padding:2rem 2rem 1.6rem;
+  border-top:5px solid var(--teal);
+  box-shadow:0 20px 60px rgba(6,26,40,.18);
+}
+.modal-eyebrow { font-size:.68rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.5rem; }
+.modal h2 { font-family:'DM Serif Display',serif;font-size:1.6rem;font-weight:400;color:var(--teal);line-height:1.2;margin-bottom:.9rem; }
+.modal-sand { height:3px;background:var(--sand);border-radius:2px;margin-bottom:1.1rem; }
+.modal p { font-size:.82rem;color:var(--muted);line-height:1.7;margin-bottom:.6rem; }
+.modal p strong { color:var(--text);font-weight:500; }
+.modal-steps { list-style:none;margin:.9rem 0 1.3rem;display:flex;flex-direction:column;gap:.5rem; }
+.modal-steps li { display:flex;align-items:flex-start;gap:.7rem;font-size:.78rem;color:var(--text);line-height:1.5; }
+.modal-step-n { width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:.65rem;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem; }
+.modal-close { width:100%;padding:.75rem;border-radius:10px;background:var(--teal);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:background .15s; }
+.modal-close:hover { background:#0e6a96; }
+
+/* ── PADLET-FLIK ── */
+.padlet-intro { font-size:.76rem;color:var(--muted);line-height:1.65;margin-bottom:.9rem; }
+.padlet-intro strong { color:var(--text);font-weight:500; }
+.padlet-wrap { background:#fff;border:1.5px solid var(--border);border-radius:13px;overflow:hidden;height:calc(100vh - 180px);min-height:500px; }
+.padlet-wrap iframe { width:100%;height:100%;border:none;display:block; }
+
+</style>
+</head>
+<body>
+
+<!-- ── MODAL ── -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <div class="modal-eyebrow">Välkommen</div>
+    <h2>AI-kompassen</h2>
+    <div class="modal-sand"></div>
+    <p>Det här är ett digitalt arbetsverktyg för heldagen. Det ersätter inte samtalet – det stödjer det.</p>
+    <p>Du använder fyra flikar under dagen:</p>
+    <ul class="modal-steps">
+      <li><span class="modal-step-n">1</span><span><strong>Röstningsmatris</strong> – markera vad som är angeläget i din verksamhet. Gör det löpande under dagen.</span></li>
+      <li><span class="modal-step-n">2</span><span><strong>Program</strong> – se var vi befinner oss och klicka på en sekvens för att läsa diskussionsfrågorna.</span></li>
+      <li><span class="modal-step-n">3</span><span><strong>Kunskapsunderlag</strong> – DigComp 3.0 som referens. Slå upp när du vill förankra något i ramverket.</span></li>
+      <li><span class="modal-step-n">4</span><span><strong>Dokumentation</strong> – ett gemensamt board där vi samlar insikter och nästa steg under sekvens 5 och 6.</span></li>
+    </ul>
+    <button class="modal-close" onclick="closeModal()">Kom igång</button>
+  </div>
+</div>
+
+<header>
+  <div class="hrow">
+    <div>
+      <h1>AI-kompassen</h1>
+      <p>Bibliotekschefer · Region Uppsala · 22 april 2025</p>
+    </div>
+    <div class="live-dot"><span class="pulse"></span>Livröstning aktiv</div>
+  </div>
+  <div class="tabbar">
+    <button class="tbtn active"    onclick="showTab('matris',this)">Röstningsmatris</button>
+    <button class="tbtn secondary" onclick="showTab('program',this)">Program</button>
+    <button class="tbtn secondary" onclick="showTab('ku',this)">Kunskapsunderlag</button>
+    <button class="tbtn secondary" onclick="showTab('dok',this)">Dokumentation</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════════════════════════════
+     PANEL 1 – RÖSTNINGSMATRIS
+══════════════════════════════════ -->
+<div class="panel active" id="tab-matris">
+  <div class="sumbar">
+    <div><span class="snum" id="totalVotes">0</span><span class="slbl">röster totalt</span></div>
+    <div class="sdiv"></div>
+    <div><span class="snum" id="topArea">–</span><span class="slbl">hetaste dimension</span></div>
+    <div class="sdiv"></div>
+    <div class="stxt" id="sumText">Markera det område som känns mest angeläget i din verksamhet.</div>
+    <button class="rbtn" onclick="resetVotes()">Återställ mina val</button>
+  </div>
+
+  <div class="chead">
+    <div></div>
+    <div class="ch ch1"><span class="chico">⚙</span>Saker<div class="chsub">tekniken</div></div>
+    <div class="ch ch2"><span class="chico">⟳</span>Sätt<div class="chsub">metoderna</div></div>
+    <div class="ch ch3"><span class="chico">◎</span>Samhälle<div class="chsub">kontexten</div></div>
+  </div>
+  <div id="matrixRows"></div>
+</div>
+
+<!-- ==============================
+     PANEL 2 – PROGRAM
+============================== -->
+<div class="panel" id="tab-program">
+  <p class="prog-intro">Dagens program – du ser var vi befinner oss just nu och vad som händer härnäst. Den markerade rutan är aktuell sekvens baserat på klockan.</p>
+  <div class="prog-list" id="progList"></div>
+</div>
+
+<!-- ══════════════════════════════════
+     PANEL 4 – DOKUMENTATION
+══════════════════════════════════ -->
+<div class="panel" id="tab-dok">
+  <p class="padlet-intro">Det gemensamma boardet – använd det under <strong>sekvens 5 och 6</strong> för att samla insikter, prioriteringar och nästa steg. Allt som skrivs här sparas och kan delas med uppdragsgivaren efteråt.</p>
+  <div class="padlet-wrap">
+    <iframe src="https://padlet.com/embed/rs1edbid4uki9ptp" allow="camera;microphone;geolocation" loading="lazy"></iframe>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PANEL 2 – KUNSKAPSUNDERLAG
+══════════════════════════════════ -->
+<div class="panel" id="tab-ku">
+
+  <p class="ku-intro">Kunskapsunderlaget är ett referensdokument du kan slå upp under dagen. Det är inte ett moment att arbeta igenom – utan ett stöd när du vill förankra en diskussion i ramverket. <strong>Öppna en sektion vid behov och stäng den igen.</strong></p>
+
+  <!-- ACCORDION 1 – KOMPETENSOMRÅDEN -->
+  <div class="accordion">
+    <button class="acc-hdr" onclick="toggleAcc(this)">
+      <div>
+        <div class="acc-title">DigComp 3.0 – fem kompetensområden</div>
+        <div class="acc-sub">Klicka på ett område för delkompetenser och AI-märkning</div>
+      </div>
+      <span class="acc-arrow">▼</span>
+    </button>
+    <div class="acc-body">
+      <div class="area-grid" id="areaGrid"></div>
+      <div class="detpane" id="detPane" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- ACCORDION 2 – KUNSKAPSNIVÅER -->
+  <div class="accordion">
+    <button class="acc-hdr" onclick="toggleAcc(this)">
+      <div>
+        <div class="acc-title">Kunskapsnivåer – Basic till Highly Advanced</div>
+        <div class="acc-sub">De fyra proficiency-nivåerna och vad de innebär i praktiken</div>
+      </div>
+      <span class="acc-arrow">▼</span>
+    </button>
+    <div class="acc-body">
+      <div class="lvl-grid">
+        <div class="lcard"><div class="lhd lh1">Grundläggande</div><div class="lbd">Utför enkla uppgifter med stöd vid behov. Identifierar grundläggande funktioner i AI-drivna verktyg.<br><span class="ltag">Med vägledning</span> <span class="ltag">29 % av lärandemål</span></div></div>
+        <div class="lcard"><div class="lhd lh2">Medel</div><div class="lbd">Löser rutinproblem självständigt. Väljer rätt verktyg efter behov. Utvärderar AI-resultat kritiskt.<br><span class="ltag">Självständigt</span> <span class="ltag">32 % av lärandemål</span></div></div>
+        <div class="lcard"><div class="lhd lh3">Avancerad</div><div class="lbd">Hanterar komplexa situationer. Stödjer andras kompetensutveckling. Anpassar sin praktik efter ny teknik.<br><span class="ltag">Stödjer andra</span> <span class="ltag">23 % av lärandemål</span></div></div>
+        <div class="lcard"><div class="lhd lh4">Högst avancerad</div><div class="lbd" style="color:var(--muted)">Löser komplexa problem. Skapar nya lösningar, leder och vägleder andra.<br><span class="ltag">Leder och vägleder</span> <span class="ltag">16 % av lärandemål</span></div></div>
+      </div>
+      <div class="ai-note">
+        <div class="ai-badges">
+          <div class="badge-row"><span class="aie">AI-E</span> AI-explicit – kompetensen nämner AI-system direkt</div>
+          <div class="badge-row"><span class="aii">AI-I</span> AI-implicit – AI relevant men nämns ej explicit</div>
+        </div>
+        <p>AI-kunnighet är integrerat genomgående i DigComp 3.0 – inte ett separat spår. Sökning inkluderar AI-drivna söktjänster (1.1 AI-E), interaktion inkluderar konversation med AI-system (2.1 AI-E), och innehållsskapande inkluderar generativ AI (3.1 AI-E). Kompetens 5.4 – att stödja andras kompetensutveckling – gäller också AI-relaterade förmågor.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /panel ku -->
+</main>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+
+const ROWS = ['Operativt','Taktiskt','Strategiskt'];
+const RSUBS = { Operativt:'medarbetarnivå', Taktiskt:'chef- och gruppnivå', Strategiskt:'lednings- och samhällsnivå' };
+
+const CELLS = [
+  { id:'op_s',  row:'Operativt',  col:'Saker',    fc:'bt',
+    title:'Vilka AI-verktyg finns i personalens vardag?',
+    qs:['Vilka tjänster används redan i dag?','Vilka är lämpliga för biblioteksuppdraget?','Hur skapar vi trygga ramar för att pröva nytt?'],
+    tag:'DigComp 1.1–1.3 · sökning, värdering, hantering' },
+  { id:'op_sa', row:'Operativt',  col:'Sätt',     fc:'bs',
+    title:'Vilka förmågor behöver personalen nu?',
+    qs:['Hur skapar vi handlingsutrymme för experimenterande?','Vilka MIK-förmågor är mest akuta?','Hur stöttar chefen utan att ta över?'],
+    tag:'DigComp 3.1 · 4.2 · innehåll och persondata' },
+  { id:'op_m',  row:'Operativt',  col:'Samhälle', fc:'bm',
+    title:'Vad möter personalen i besöksmötet?',
+    qs:['Hur möter vi besökare som frågar om AI?','Vad innebär demokratiuppdraget i AI-vardagen?','Vad skiljer bibliotekets roll från andras?'],
+    tag:'DigComp 2.3 · medborgarperspektiv' },
+  { id:'tak_s', row:'Taktiskt',   col:'Saker',    fc:'bt',
+    title:'Vilken infrastruktur och vilka riktlinjer behövs?',
+    qs:['Har vi tagit ställning till godkända AI-verktyg?','Hur kartlägger vi nuläget med DigComp som karta?','Vem ansvarar för att hålla kunskapen levande?'],
+    tag:'DigComp 5.2 · identifiera behov och tekniklösningar' },
+  { id:'tak_sa',row:'Taktiskt',   col:'Sätt',     fc:'bs',
+    title:'Hur leder vi kompetensutveckling utan eldsjälsberoende?',
+    qs:['Hur gör vi MIK-arbetet systematiskt?','Hur leder vi i samverkan och samsyn?','Hur synliggör vi det arbete som görs?'],
+    tag:'DigComp 5.4 · stödja andras kompetensutveckling' },
+  { id:'tak_m', row:'Taktiskt',   col:'Samhälle', fc:'bm',
+    title:'Hur bidrar biblioteket till kommunens AI-strategi?',
+    qs:['Har chefsgruppen samsyn kring bibliotekets roll?','Hur positionerar vi oss i kommunens digitaliseringsarbete?','Vilka samarbetspartner behöver vi?'],
+    tag:'DigComp 2.4 · samarbete och samskapande' },
+  { id:'str_s', row:'Strategiskt',col:'Saker',    fc:'bt',
+    title:'Bibliotekets plats i kommunal AI-infrastruktur',
+    qs:['Hur positionerar vi biblioteket som AI-kunnig aktör?','Vilka politiska beslut behöver vi påverka?','Vad kräver vi av kommunen för att klara uppdraget?'],
+    tag:'DigComp 5.3 · kreativa lösningar med ny teknik' },
+  { id:'str_sa',row:'Strategiskt',col:'Sätt',     fc:'bs',
+    title:'Hur stärker vi bibliotekets röst utåt?',
+    qs:['Hur kommunicerar vi bibliotekets värde till politiker?','Hur bygger vi lärande organisationer som håller?','Hur skapar vi gemensamma berättelser i regionen?'],
+    tag:'DigComp 5.4 (avancerad) · leda och utbilda' },
+  { id:'str_m', row:'Strategiskt',col:'Samhälle', fc:'bm',
+    title:'Bibliotekets demokratiska roll i AI-samhället',
+    qs:['Vad innebär digital inkludering när AI är normen?','Hur undviker vi att digitaliseringen lämnar folk utanför?','Vilken framtid vill vi vara med och bygga?'],
+    tag:'DigComp 2.3 + 4.3 · medborgarperspektiv och välmående' },
+];
+
+const VLBLS = ['Hög prioritet för oss','Delvis aktuellt','Inte där vi är nu'];
+
+const AREAS = [
+  { id:0, cls:'a1', nr:'Område 1', title:'Information, sökning och hantering',
+    subs:'1.1 Sökning · 1.2 Värdering · 1.3 Hantering',
+    desc:'Kärnan i informationskunnigheten – och det område AI förändrar mest. Söktjänster är i grunden AI-drivna.',
+    comps:[
+      { id:'1.1', name:'Sökning och filtrering', ai:'e', desc:'Identifiera AI-drivna vs traditionella söktjänster. Formulera effektiva sökfrågor och prompts.' },
+      { id:'1.2', name:'Värdering av information', ai:'e', desc:'Källkritik i AI-genererat innehåll. Bedöma trovärdighet i AI-output.' },
+      { id:'1.3', name:'Hantering av information', ai:'i', desc:'Organisera, lagra och analysera information med digitala verktyg.' },
+    ]},
+  { id:1, cls:'a2', nr:'Område 2', title:'Kommunikation och samarbete',
+    subs:'2.1 Interaktion · 2.2 Delning · 2.3 Medborgarperspektiv · 2.4 Samarbete · 2.5 Normer · 2.6 Digital identitet',
+    desc:'Inkluderar nu explicit interaktion med AI-system och frågor om digital identitet och normer i AI-drivna miljöer.',
+    comps:[
+      { id:'2.1', name:'Interaktion', ai:'e', desc:'Interagera med och via digitala tekniker – inkl. konversation med AI-system.' },
+      { id:'2.2', name:'Delning', ai:'i', desc:'Dela information etiskt och ansvarsfullt, inkl. AI-genererat innehåll.' },
+      { id:'2.3', name:'Medborgarperspektiv', ai:'i', desc:'Delta i samhället via digitala plattformar. Hävda sina rättigheter i digitala miljöer.' },
+      { id:'2.4', name:'Samarbete', ai:'i', desc:'Samskapande och kollaborativt arbete med digitala tekniker.' },
+      { id:'2.5', name:'Digitalt beteende', ai:'i', desc:'Normer för respektfullt beteende i digitala miljöer.' },
+      { id:'2.6', name:'Digital identitet', ai:'i', desc:'Hantera sin digitala identitet och digitalt fotavtryck.' },
+    ]},
+  { id:2, cls:'a3', nr:'Område 3', title:'Innehållsskapande',
+    subs:'3.1 Skapa · 3.2 Omarbeta · 3.3 Upphovsrätt · 3.4 Programmering',
+    desc:'Generativ AI lyfts fram explicit – att skapa, omarbeta och förstå upphovsrätt i AI-eran är centralt för bibliotekspersonal.',
+    comps:[
+      { id:'3.1', name:'Skapa digitalt innehåll', ai:'e', desc:'Använda digitala tekniker etiskt för att skapa och redigera – inkl. generativ AI.' },
+      { id:'3.2', name:'Omarbeta och integrera', ai:'e', desc:'Förbättra och integrera AI-genererat innehåll i befintliga kunskapskroppar.' },
+      { id:'3.3', name:'Upphovsrätt och licenser', ai:'e', desc:'Förstå upphovsrätt i relation till AI-genererat material.' },
+      { id:'3.4', name:'Programmering', ai:'i', desc:'Förstå hur instruktioner till datorsystem fungerar – inkl. hur AI tränas.' },
+    ]},
+  { id:3, cls:'a4', nr:'Område 4', title:'Säkerhet, välmående och ansvar',
+    subs:'4.1 Enheter · 4.2 Persondata · 4.3 Välmående · 4.4 Miljö',
+    desc:'AI-system medför nya frågor om persondata, integritet och miljöpåverkan. Välmåendet i AI-drivna miljöer är ett eget kompetensområde.',
+    comps:[
+      { id:'4.1', name:'Enheter och digitala miljöer', ai:'i', desc:'Skydda enheter och förstå säkerhetsrisker i digitala miljöer.' },
+      { id:'4.2', name:'Persondata och integritet', ai:'e', desc:'Förstå hur AI-system hanterar persondata. GDPR och AI Act.' },
+      { id:'4.3', name:'Välmående', ai:'i', desc:'Balansera teknikvanor och bevara välmående i AI-genomsyrade arbetsmiljöer.' },
+      { id:'4.4', name:'Miljöpåverkan', ai:'e', desc:'Förstå och beakta AI-systemens miljö- och energiavtryck.' },
+    ]},
+  { id:4, cls:'a5', nr:'Område 5', title:'Problemidentifiering och lösning',
+    subs:'5.1 Tekniska problem · 5.2 Behov och teknikval · 5.3 Kreativa lösningar · 5.4 Kompetensutveckling',
+    desc:'Att identifiera egna och andras kompetensbehov – inkl. AI-kunnighet – är en kompetens i sig. Centralt för chefer.',
+    comps:[
+      { id:'5.1', name:'Tekniska problem', ai:'i', desc:'Lösa tekniska problem i digitala miljöer, inkl. AI-relaterade fel och begränsningar.' },
+      { id:'5.2', name:'Behov och tekniklösningar', ai:'e', desc:'Identifiera behov och utvärdera om och hur AI kan möta dem.' },
+      { id:'5.3', name:'Kreativa lösningar', ai:'e', desc:'Använda AI för att skapa innovativa lösningar på komplexa problem.' },
+      { id:'5.4', name:'Kompetensutveckling', ai:'i', desc:'Kartlägga, stödja och utforma lärande för att möta digitala kompetensbehov – inkl. AI.' },
+    ]},
+];
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+const SK='aikomp_v4_votes', MK='aikomp_v4_mine';
+let votes={}, mine={}, selArea=-1;
+
+function load(){ try{votes=JSON.parse(localStorage.getItem(SK)||'{}')}catch(e){votes={}} try{mine=JSON.parse(localStorage.getItem(MK)||'{}')}catch(e){mine={}} }
+function save(){ localStorage.setItem(SK,JSON.stringify(votes));localStorage.setItem(MK,JSON.stringify(mine)); }
+function vc(id,i){ return ((votes[id]||[])[i])||0; }
+function vt(id){ return (votes[id]||[]).reduce((a,b)=>a+(b||0),0); }
+
+// ── BUILD MATRIS ──────────────────────────────────────────────────────────────
+function buildMatrix(){
+  const wrap=document.getElementById('matrixRows');
+  ROWS.forEach(row=>{
+    const div=document.createElement('div'); div.className='mrow';
+    div.innerHTML=`<div class="rlbl"><div class="rlbl-t">${row}</div><div class="rlbl-s">${RSUBS[row]}</div></div>`;
+    CELLS.filter(c=>c.row===row).forEach(c=>{
+      const el=document.createElement('div'); el.className='mcell'; el.id='mc_'+c.id;
+      const mv=mine[c.id];
+      el.innerHTML=`
+        <div class="ct">${c.title}</div>
+        <ul class="cqs">${c.qs.map(q=>`<li>${q}</li>`).join('')}</ul>
+        <span class="dtag">${c.tag}</span>
+        <div class="vsec">
+          <div class="vprompt">Hur angeläget är detta för er verksamhet?</div>
+          <div class="vopts">${VLBLS.map((l,i)=>`
+            <div class="vopt" onclick="castVote('${c.id}',${i})">
+              <div class="vbtn${mv===i?' voted':''}" data-opt="${i}">${mv===i?'✓':''}</div>
+              <div class="vlbl">${l}</div>
+            </div>`).join('')}</div>
+          <div class="bars">${VLBLS.map((l,i)=>`
+            <div class="brow">
+              <div class="blbl">${l}</div>
+              <div class="btrack"><div class="bfill ${c.fc}" data-bar="${i}" style="width:0%"></div></div>
+              <div class="bcnt" data-cnt="${i}">0</div>
+            </div>`).join('')}</div>
+        </div>`;
+      div.appendChild(el);
+    });
+    wrap.appendChild(div);
+  });
+}
+
+function renderMatrix(){
+  let topId=null,topN=0;
+  CELLS.forEach(c=>{const t=vt(c.id);if(t>topN){topN=t;topId=c.id;}});
+  CELLS.forEach(c=>{
+    const el=document.getElementById('mc_'+c.id); if(!el)return;
+    const tot=vt(c.id),mv=mine[c.id],isTop=c.id===topId&&topN>0;
+    el.classList.toggle('top',isTop);
+    const badge=el.querySelector('.topbadge');
+    if(isTop&&!badge){const b=document.createElement('div');b.className='topbadge';b.textContent='Mest prioriterat';el.appendChild(b);}
+    if(!isTop&&badge)badge.remove();
+    VLBLS.forEach((_,i)=>{
+      const btn=el.querySelector(`[data-opt="${i}"]`);
+      const bar=el.querySelector(`[data-bar="${i}"]`);
+      const cnt=el.querySelector(`[data-cnt="${i}"]`);
+      if(btn){btn.classList.toggle('voted',mv===i);btn.textContent=mv===i?'✓':'';}
+      if(bar){bar.style.width=(tot>0?Math.round(vc(c.id,i)/tot*100):0)+'%';}
+      if(cnt)cnt.textContent=vc(c.id,i);
+    });
+  });
+  const total=CELLS.reduce((a,c)=>a+vt(c.id),0);
+  document.getElementById('totalVotes').textContent=total;
+  const cv={Saker:0,Sätt:0,Samhälle:0};
+  CELLS.forEach(c=>{cv[c.col]=(cv[c.col]||0)+vt(c.id);});
+  const topC=Object.entries(cv).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('topArea').textContent=topC[1]>0?topC[0]:'–';
+  if(topId&&topN>0){
+    const tc=CELLS.find(c=>c.id===topId);
+    document.getElementById('sumText').innerHTML=`Mest markerat: <strong>${tc.title}</strong> (${topN} röst${topN!==1?'er':''}) · ${tc.row}-nivå, ${tc.col}-dimensionen.`;
+  } else {
+    document.getElementById('sumText').textContent='Markera det område som känns mest angeläget i din verksamhet.';
+  }
+}
+
+function castVote(id,i){
+  if(!votes[id])votes[id]=[0,0,0];
+  const prev=mine[id];
+  if(prev===i){votes[id][i]=Math.max(0,votes[id][i]-1);delete mine[id];}
+  else{if(prev!==undefined)votes[id][prev]=Math.max(0,votes[id][prev]-1);votes[id][i]=(votes[id][i]||0)+1;mine[id]=i;}
+  save();renderMatrix();
+}
+
+function resetVotes(){
+  Object.entries(mine).forEach(([id,i])=>{if(votes[id])votes[id][i]=Math.max(0,votes[id][i]-1);});
+  mine={};save();renderMatrix();
+}
+
+// ── BUILD AREAS ───────────────────────────────────────────────────────────────
+function buildAreas(){
+  const grid=document.getElementById('areaGrid');
+  AREAS.forEach(a=>{
+    const el=document.createElement('div');el.className=`acard ${a.cls}`;el.id='area_'+a.id;
+    el.onclick=()=>selectArea(a.id);
+    el.innerHTML=`<div class="anum">${a.nr}</div><div class="atit">${a.title}</div><div class="asub">${a.subs}</div>`;
+    grid.appendChild(el);
+  });
+}
+
+function selectArea(id){
+  if(selArea===id){selArea=-1;document.getElementById('detPane').style.display='none';document.querySelectorAll('.acard').forEach(c=>c.classList.remove('sel'));return;}
+  selArea=id;
+  document.querySelectorAll('.acard').forEach(c=>c.classList.toggle('sel',parseInt(c.id.split('_')[1])===id));
+  const a=AREAS[id],pane=document.getElementById('detPane');
+  pane.style.display='block';
+  pane.innerHTML=`<h4>${a.title}</h4><p>${a.desc}</p><div class="comp-grid">${a.comps.map(c=>`
+    <div class="citem">
+      <strong>${c.id} ${c.name}<span class="ai${c.ai}">AI-${c.ai.toUpperCase()}</span></strong>
+      <span>${c.desc}</span>
+    </div>`).join('')}</div>`;
+}
+
+// ── ACCORDION ─────────────────────────────────────────────────────────────────
+function toggleAcc(btn){
+  const body=btn.nextElementSibling;
+  const open=body.classList.contains('open');
+  // stäng alla andra
+  document.querySelectorAll('.acc-hdr').forEach(h=>{h.classList.remove('open');h.nextElementSibling.classList.remove('open');});
+  if(!open){btn.classList.add('open');body.classList.add('open');}
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function showTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── PROGRAM DATA ─────────────────────────────────────────────────────────────
+const PROGRAM = [
+  { type:'break', startH:9,  startM:0,  endH:9,  endM:30,
+    title:'Välkomna och introduktion',
+    desc:'AI-kompassen presenteras. Praktisk info om dagen och om röstningsverktyget.' },
+  { type:'seq',   startH:9,  startM:30, endH:10, endM:15,
+    nr:'Sekvens 1', title:'Vad är AI-kunnighet?',
+    desc:'DigComp 3.0 som gemensamt kartspråk. Fem kompetensområden och fyra nivåer. Live-exempel: AI genererar en infografik över ramverket.',
+    tag:'DigComp 1.2 · 2.1 · 5.4',
+    qs:[
+      'Var befinner sig er personal i dag – på vilka nivåer i ramverket?',
+      'Var befinner sig du som chef?',
+      'Vilken nivå är rimlig att sikta på – för personal, för chefer – och över vilken tidshorisont?',
+    ]},
+  { type:'break', startH:10, startM:15, endH:10, endM:30,
+    title:'Fika', desc:'' },
+  { type:'seq',   startH:10, startM:30, endH:11, endM:30,
+    nr:'Sekvens 2', title:'Saker – verktyg och infrastruktur',
+    desc:'Vilka AI-tjänster finns i verksamhetens vardag? Vad kräver ledarskapet? Live-exempel: AI jämför biblioteksplaner från Uppsala-länet.',
+    tag:'DigComp 5.2 · 1.1 · 4.2',
+    qs:[
+      'Har er organisation tagit ställning till vilka AI-verktyg som är godkända? Vem ansvarar för det?',
+      'Hur skapar vi handlingsutrymme för personal att experimentera tryggt?',
+      'Vad behöver biblioteksplanen säga om AI – och vem driver det arbetet?',
+    ]},
+  { type:'seq',   startH:11, startM:30, endH:12, endM:15,
+    nr:'Sekvens 3', title:'Sätt – kompetensutveckling i samsyn',
+    desc:'Hur leder vi utan eldsjälsberoende? Samsyn som processfråga. Live-exempel: AI formulerar kompetensmål från biblioteksplan och DigComp.',
+    tag:'DigComp 5.4 · 2.4',
+    qs:[
+      'Hur ser kompetensutvecklingen kring AI ut i er verksamhet i dag – vem driver den, och varför?',
+      'Hur gör vi MIK-arbetet systematiskt i hela organisationen – inte beroende av eldsjälar?',
+      'Vad behöver finnas på plats – tid, mandat, verktyg – för att mål ska följas upp?',
+      'Hur leder vi i samverkan och samsyn med kollegor i regionen?',
+    ]},
+  { type:'break', startH:12, startM:15, endH:13, endM:15,
+    title:'Lunch', desc:'' },
+  { type:'seq',   startH:13, startM:15, endH:14, endM:15,
+    nr:'Sekvens 4', title:'Samhälle – demokratiuppdraget',
+    desc:'Bibliotekets roll när AI förändrar medborgarnas informationsmiljö. Live-exempel: AI tar fram presentationsunderlag till nämnden.',
+    tag:'DigComp 2.3 · 4.3',
+    qs:[
+      'Hur är bibliotekets roll definierad i er kommuns digitaliseringsstrategi – eller saknas ni där?',
+      'Vad innebär digital inkludering när AI är normen – och vem lämnas utanför?',
+      'Hur stärker vi bibliotekets röst gentemot politiker och förvaltningsledning?',
+      'Kan vi formulera en gemensam berättelse om bibliotekets demokratiska roll i AI-samhället?',
+    ]},
+  { type:'break', startH:14, startM:15, endH:14, endM:30,
+    title:'Fika', desc:'' },
+  { type:'seq',   startH:14, startM:30, endH:15, endM:0,
+    nr:'Sekvens 5', title:'Röstresultaten – vad sade matrisen?',
+    desc:'Gemensam genomgång av prioriteringarna. Var finns samsyn, var finns skillnader?',
+    tag:'Matris · reflektion',
+    qs:[
+      'Vilka celler fick flest röster på "Hög prioritet"?',
+      'Var är skillnaderna störst mellan deltagarna – och vad berättar det?',
+      'Vilka av de högt prioriterade frågorna kan vi börja arbeta med redan nu?',
+      'Vad saknas i matrisen som vi behöver lägga till i samtalet?',
+    ]},
+  { type:'seq',   startH:15, startM:0,  endH:16, endM:0,
+    nr:'Sekvens 6', title:'Framåt – samsyn och nästa steg',
+    desc:'Tre ronder: förutsättningar, samsyn, nästa steg. Konkreta åtaganden att ta med hem.',
+    tag:'Rond 1 · 2 · 3',
+    qs:[
+      'Rond 1 – Förutsättningar: Vad behöver finnas på plats internt och externt? Var ligger mandatfrågorna?',
+      'Rond 2 – Samsyn: Vilka insikter är gruppen ense om? Formulera en till tre meningar.',
+      'Rond 3 – Nästa steg: Vem gör vad, när? Vad kan du göra i din verksamhet – vad kräver gemensam handling?',
+    ]},
+  { type:'break', startH:16, startM:0,  endH:16, endM:0,
+    title:'Avslut', desc:'' },
+];
+
+function buildProgram(){
+  const wrap = document.getElementById('progList');
+  const now = new Date();
+  // Testrad – avkommentera och sätt önskad tid:
+  // now.setHours(13); now.setMinutes(30);
+  const nowMin = now.getHours()*60 + now.getMinutes();
+
+  PROGRAM.forEach(s => {
+    const startMin = s.startH*60 + s.startM;
+    const endMin   = s.endH*60   + s.endM;
+    const isNow    = nowMin >= startMin && nowMin < endMin;
+    const isPast   = nowMin >= endMin;
+    const isBreak  = s.type === 'break';
+    const hasQs    = s.qs && s.qs.length > 0;
+
+    const timeStr = s.startH+':'+String(s.startM).padStart(2,'0') +
+      (s.endH !== s.startH || s.endM !== s.startM
+        ? '\u2013'+s.endH+':'+String(s.endM).padStart(2,'0') : '');
+
+    const card = document.createElement('div');
+    card.className = 'seq-card'+(isBreak?' break':'')+(isNow?' now':'')+(isPast?' past':'')+(hasQs?' clickable':'');
+
+    const qsHtml = hasQs ? `
+      <div class="seq-qs" style="display:none">
+        <div class="seq-qs-label">Diskussionsfrågor</div>
+        <ul class="seq-qs-list">${s.qs.map(q=>`<li>${q}</li>`).join('')}</ul>
+      </div>` : '';
+
+    const arrowHtml = hasQs ? `<div class="seq-arrow">▼</div>` : '';
+
+    card.innerHTML = `
+      <div class="seq-time">
+        ${timeStr}
+        <div class="seq-now-badge">Nu</div>
+      </div>
+      <div class="seq-body">
+        ${s.nr ? `<div class="seq-nr">${s.nr}</div>` : ''}
+        <div class="seq-title-row">
+          <div class="seq-title">${s.title}</div>
+          ${arrowHtml}
+        </div>
+        ${s.desc ? `<div class="seq-desc">${s.desc}</div>` : ''}
+        ${s.tag  ? `<span class="seq-tag">${s.tag}</span>` : ''}
+        ${qsHtml}
+      </div>`;
+
+    if(hasQs){
+      card.addEventListener('click', () => {
+        const qs = card.querySelector('.seq-qs');
+        const arrow = card.querySelector('.seq-arrow');
+        const open = qs.style.display !== 'none';
+        qs.style.display = open ? 'none' : 'block';
+        if(arrow) arrow.style.transform = open ? '' : 'rotate(180deg)';
+      });
+    }
+
+    wrap.appendChild(card);
+  });
+}
+
+// ── MODAL ───────────────────────────────────────────────────────────────────
+const MODAL_KEY = 'aikomp_modal_seen';
+function closeModal(){
+  document.getElementById('modalBackdrop').classList.add('hidden');
+  localStorage.setItem(MODAL_KEY,'1');
+}
+function initModal(){
+  if(localStorage.getItem(MODAL_KEY)){
+    document.getElementById('modalBackdrop').classList.add('hidden');
+  }
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+load();
+initModal();
+buildMatrix();
+renderMatrix();
+buildAreas();
+buildProgram();
+setInterval(()=>{const prev=JSON.stringify(votes);load();if(JSON.stringify(votes)!==prev)renderMatrix();},7000);
+</script>
+</body>
+</html>
