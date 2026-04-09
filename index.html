@@ -62,57 +62,74 @@ main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
 .panel.active { display:block; }
 
 /* ══════════════════════════════════════
-   PANEL 1 – RÖSTNINGSMATRIS
+   PANEL 1 – MATRIS
 ══════════════════════════════════════ */
-.sumbar {
-  background:#fff;border:1.5px solid var(--border);border-radius:13px;
-  padding:.9rem 1.3rem;margin-bottom:1.1rem;
-  display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;
-}
-.snum { font-family:'DM Serif Display',serif;font-size:1.45rem;color:var(--teal);display:block; }
-.slbl { font-size:.64rem;color:var(--muted); }
-.sdiv { width:1px;height:34px;background:var(--border); }
-.stxt { flex:1;min-width:160px;font-size:.72rem;color:var(--muted);line-height:1.5; }
-.stxt strong { color:var(--text);font-weight:500; }
-.rbtn { background:none;border:1px solid var(--border);color:var(--muted);font-size:.66rem;font-family:'DM Sans',sans-serif;padding:4px 12px;border-radius:20px;cursor:pointer;transition:all .15s;margin-left:auto; }
-.rbtn:hover { border-color:var(--malva);color:var(--malva); }
+.matrix-intro { font-size:.75rem;color:var(--muted);line-height:1.6;margin-bottom:1.1rem; }
+.matrix-intro strong { color:var(--text);font-weight:500; }
 
-.chead { display:grid;grid-template-columns:108px repeat(3,1fr);gap:6px;margin-bottom:6px; }
-.ch { padding:10px 11px;border-radius:8px 8px 0 0;font-size:.73rem;font-weight:500;text-align:center;line-height:1.4; }
-.chico { font-size:1rem;display:block;margin-bottom:1px; }
+.chead { display:grid;grid-template-columns:130px repeat(3,1fr);gap:7px;margin-bottom:7px; }
+.ch { padding:11px 12px;border-radius:9px 9px 0 0;font-size:.75rem;font-weight:500;text-align:center;line-height:1.4; }
+.chico { font-size:1rem;display:block;margin-bottom:2px; }
 .chsub { font-size:.63rem;opacity:.65;font-weight:300; }
 .ch1{background:var(--teal-light);color:var(--teal);}
 .ch2{background:var(--sand-l);color:#7a5a2a;}
 .ch3{background:var(--malva-l);color:var(--malva);}
 
-.mrow { display:grid;grid-template-columns:108px repeat(3,1fr);gap:6px;margin-bottom:6px; }
-.rlbl { display:flex;flex-direction:column;justify-content:center;align-items:flex-end;padding:10px 11px 10px 0;text-align:right; }
-.rlbl-t { font-family:'DM Serif Display',serif;font-size:.9rem;color:var(--text);line-height:1.2; }
-.rlbl-s { font-size:.62rem;color:var(--muted);margin-top:2px; }
+.mrow { display:grid;grid-template-columns:130px repeat(3,1fr);gap:7px;margin-bottom:7px; }
 
-.mcell { background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:12px;position:relative;transition:border-color .2s; }
-.mcell:hover { border-color:var(--sand); }
-.mcell.top { outline:2.5px solid var(--sand); }
-.topbadge { position:absolute;top:-8px;right:9px;background:var(--sand);color:#5a3a10;font-size:.56rem;font-weight:500;padding:1px 7px;border-radius:6px;letter-spacing:.04em; }
-.ct { font-size:.72rem;font-weight:500;color:var(--text);margin-bottom:5px;line-height:1.4; }
-.cqs { list-style:none;margin-bottom:8px; }
-.cqs li { font-size:.66rem;color:var(--muted);line-height:1.5;padding:2px 0 2px 8px;position:relative; }
-.cqs li::before { content:'→';position:absolute;left:0;color:var(--sand);font-size:.58rem;top:4px; }
-.dtag { display:inline-block;font-size:.58rem;padding:1px 5px;border-radius:3px;background:var(--off);border:1px solid var(--border);color:var(--muted); }
-.vsec { margin-top:9px;padding-top:9px;border-top:1px solid var(--border); }
-.vprompt { font-size:.63rem;color:var(--muted);margin-bottom:6px; }
-.vopts { display:flex;flex-direction:column;gap:4px; }
-.vopt { display:flex;align-items:center;gap:6px;cursor:pointer; }
-.vbtn { width:19px;height:19px;border-radius:50%;border:2px solid var(--border);background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:.52rem;color:transparent; }
-.vbtn.voted { background:var(--teal);border-color:var(--teal);color:#fff; }
-.vlbl { font-size:.65rem;color:var(--muted);flex:1;line-height:1.3; }
-.bars { margin-top:7px; }
-.brow { display:flex;align-items:center;gap:4px;margin-bottom:3px; }
-.blbl { font-size:.58rem;color:var(--muted);width:68px;flex-shrink:0;line-height:1.2; }
-.btrack { flex:1;height:5px;background:var(--off);border-radius:3px;overflow:hidden;border:1px solid var(--border); }
-.bfill { height:100%;border-radius:3px;transition:width .4s ease; }
-.bt{background:var(--teal);}.bs{background:var(--sand);}.bm{background:var(--malva);}
-.bcnt { font-size:.58rem;color:var(--muted);width:18px;text-align:right; }
+/* Radlabel – visuellt tyngre, speglar kunskapsunderlaget */
+.rlbl {
+  display:flex;flex-direction:column;justify-content:center;
+  align-items:flex-end;padding:12px 12px 12px 0;text-align:right;
+  border-right:3px solid var(--border);
+}
+.rlbl-t { font-family:'DM Serif Display',serif;font-size:1rem;color:var(--text);line-height:1.2;font-weight:400; }
+.rlbl-s { font-size:.62rem;color:var(--muted);margin-top:3px;line-height:1.45;max-width:115px;font-style:italic; }
+.rlbl-badge {
+  display:inline-block;margin-top:6px;font-size:.58rem;font-weight:500;
+  padding:2px 7px;border-radius:5px;
+}
+.rb-medel  { background:#faeeda;color:#7a5a2a; }
+.rb-adv    { background:var(--malva-l);color:#4b1528; }
+.rb-hog    { background:var(--teal);color:#e1f5ee; }
+
+/* Celler – renare, ingen röstning */
+.mcell {
+  background:#fff;border:1.5px solid var(--border);border-radius:10px;
+  padding:14px 13px;position:relative;transition:border-color .2s,box-shadow .2s;
+}
+.mcell:hover { border-color:var(--sand);box-shadow:0 2px 8px rgba(6,26,40,.06); }
+
+.ct {
+  font-size:.78rem;font-weight:500;color:var(--text);
+  margin-bottom:7px;line-height:1.45;
+}
+.cdesc {
+  font-size:.7rem;color:var(--muted);line-height:1.55;margin-bottom:10px;
+}
+
+/* DigComp-tagg – klickbar genväg */
+.dtag {
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:.6rem;padding:3px 8px;border-radius:5px;
+  background:var(--teal-light);border:1px solid #b8d8e8;
+  color:var(--teal);cursor:pointer;transition:all .15s;
+  text-decoration:none;font-weight:500;
+}
+.dtag:hover { background:var(--teal);color:#fff;border-color:var(--teal); }
+.dtag-arrow { font-size:.55rem;opacity:.7; }
+
+/* Accent per kolumn på vänster kant */
+.mcell.col-saker  { border-left:3px solid var(--teal); }
+.mcell.col-satt   { border-left:3px solid var(--sand); }
+.mcell.col-samh   { border-left:3px solid var(--malva); }
+
+@media(max-width:700px){
+  .chead,.mrow { grid-template-columns:80px repeat(3,1fr);gap:4px; }
+  .mcell { padding:9px 8px; }
+  .cdesc { display:none; }
+  .rlbl { border-right:2px solid var(--border); }
+}
 
 /* ══════════════════════════════════════
    PANEL 2 – KUNSKAPSUNDERLAG
@@ -276,6 +293,207 @@ main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
 .padlet-wrap { background:#fff;border:1.5px solid var(--border);border-radius:13px;overflow:hidden;height:calc(100vh - 180px);min-height:500px; }
 .padlet-wrap iframe { width:100%;height:100%;border:none;display:block; }
 
+
+/* ══════════════════════════════════════
+   PANEL 5 – ANALYS (trestegsnarrativ)
+══════════════════════════════════════ */
+.analys-intro{font-size:.76rem;color:var(--muted);line-height:1.65;margin-bottom:1rem;}
+.analys-intro strong{color:var(--text);font-weight:500;}
+.admin-gate{background:#fff;border:1.5px solid var(--border);border-radius:13px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;}
+.admin-gate h3{font-size:.82rem;font-weight:500;color:var(--teal);margin-bottom:.3rem;}
+.admin-gate p{font-size:.72rem;color:var(--muted);margin-bottom:.9rem;line-height:1.55;}
+.admin-pw-row{display:flex;gap:.6rem;align-items:center;}
+.admin-pw-row input{flex:1;padding:.45rem .7rem;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.78rem;}
+.admin-pw-row input:focus{outline:none;border-color:var(--teal);}
+.admin-pw-row button{padding:.45rem 1rem;background:var(--teal);color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.76rem;cursor:pointer;}
+.admin-err{font-size:.68rem;color:#c0392b;margin-top:.4rem;display:none;}
+.csv-section{display:none;}.csv-section.visible{display:block;}
+.csv-drop{border:2px dashed var(--border);border-radius:13px;padding:2rem 1.5rem;text-align:center;background:#fff;cursor:pointer;transition:all .2s;margin-bottom:.8rem;}
+.csv-drop:hover,.csv-drop.dragover{border-color:var(--teal);background:var(--teal-light);}
+.csv-drop-icon{font-size:1.8rem;display:block;margin-bottom:.5rem;}
+.csv-drop-title{font-size:.85rem;font-weight:500;color:var(--text);margin-bottom:.25rem;}
+.csv-drop-sub{font-size:.7rem;color:var(--muted);line-height:1.5;}
+.csv-drop input[type=file]{display:none;}
+.csv-status{font-size:.72rem;color:var(--teal);min-height:1.1rem;margin-top:.4rem;}
+.csv-error{color:#c0392b;}
+.csv-format-box{background:var(--off);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;margin-bottom:.9rem;font-size:.71rem;color:var(--muted);line-height:1.65;}
+.csv-format-box strong{color:var(--text);font-weight:500;}
+.csv-format-box code{background:#fff;border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:.67rem;font-family:'Courier New',monospace;color:var(--teal);}
+.parse-btn{padding:.7rem 1.4rem;background:var(--teal);color:#fff;border:none;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:500;cursor:pointer;transition:background .15s;}
+.parse-btn:hover{background:#0e6a96;}
+.parse-btn:disabled{opacity:.4;cursor:not-allowed;}
+.result-view{display:none;}.result-view.visible{display:block;}
+/* Step nav */
+.step-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:1.1rem;}
+.step-btn-a{padding:.55rem .6rem;border:1.5px solid var(--border);border-radius:var(--border-radius-md);background:#fff;font-family:'DM Sans',sans-serif;font-size:.72rem;color:var(--muted);cursor:pointer;transition:all .15s;text-align:center;line-height:1.35;}
+.step-btn-a .sn{display:block;font-size:.6rem;opacity:.65;margin-bottom:2px;}
+.step-btn-a.active{background:var(--teal);color:#fff;border-color:var(--teal);font-weight:500;}
+.step-btn-a.done{border-color:var(--sand);color:#7a5a2a;background:var(--sand-l);}
+.step-panel-a{display:none;animation:fadeInA .2s ease;}
+.step-panel-a.active{display:block;}
+@keyframes fadeInA{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+.q-card{background:var(--teal-light);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:1rem;}
+.q-lbl{font-size:.6rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);margin-bottom:.25rem;}
+.q-txt{font-size:.88rem;font-weight:500;color:var(--teal);line-height:1.35;}
+.next-btn-a{display:inline-flex;align-items:center;gap:5px;padding:.5rem 1rem;background:var(--teal);color:#fff;border:none;border-radius:var(--border-radius-md);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;cursor:pointer;transition:background .15s;margin-top:.9rem;}
+.next-btn-a:hover{background:#0e6a96;}
+/* Steg 1 – dim cards */
+.dim-grid-a{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:.9rem;}
+.dim-card-a{border-radius:11px;padding:.9rem 1rem;text-align:center;border:1.5px solid transparent;}
+.dca-lbl{font-size:.62rem;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.35rem;}
+.dca-num{font-size:1.9rem;font-weight:500;line-height:1;margin-bottom:.2rem;}
+.dca-rank{font-size:.65rem;font-weight:500;margin-bottom:.2rem;}
+.dca-span{font-size:.62rem;color:var(--muted);}
+.dca-bar{height:5px;border-radius:3px;margin-top:.55rem;background:var(--border);}
+.dca-fill{height:100%;border-radius:3px;}
+/* Steg 2 – staplar */
+.dim-sec-hdr{display:flex;align-items:center;gap:6px;padding:.5rem .8rem;border-radius:8px;margin-bottom:.55rem;font-size:.75rem;font-weight:500;}
+.bar-section{margin-bottom:1.1rem;}
+.bar-r{display:grid;grid-template-columns:82px 1fr 32px;gap:5px;align-items:center;margin-bottom:4px;}
+.bar-lib{font-size:.72rem;color:var(--muted);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bar-track{height:20px;background:var(--off);border-radius:4px;overflow:hidden;position:relative;border:1px solid var(--border);}
+.bar-fill-a{height:100%;border-radius:4px;transition:width .7s ease;display:flex;align-items:center;padding-left:6px;}
+.bar-val-a{font-size:.65rem;font-weight:500;color:#fff;}
+.bar-num-a{font-size:.7rem;color:var(--muted);text-align:right;}
+/* Steg 3 – biblioteksdetalj */
+.lib-sel{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:.9rem;}
+.lib-btn-a{padding:4px 11px;border-radius:20px;border:1px solid var(--border);background:#fff;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.72rem;cursor:pointer;transition:all .15s;}
+.lib-btn-a.sel{background:var(--teal);color:#fff;border-color:var(--teal);}
+.lib-detail-a{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.1rem;}
+.lib-detail-name{font-size:.95rem;font-weight:500;margin-bottom:.8rem;}
+.detail-dim-hdr{font-size:.62rem;font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem;}
+.detail-dim{margin-bottom:.8rem;}
+.detail-r{display:grid;grid-template-columns:110px 1fr 28px;gap:4px;align-items:center;margin-bottom:3px;}
+.detail-lbl{font-size:.7rem;color:var(--muted);}
+.strip{padding:.45rem .7rem;border-radius:6px;margin-bottom:.35rem;font-size:.72rem;line-height:1.5;}
+.s-alert{background:#fde8e8;color:#8b2020;}
+.s-ok{background:#e8f5e8;color:#2a6a2a;}
+.s-info{background:var(--teal-light);color:var(--teal);}
+.s-caut{background:#fdf0dc;color:#7a4a10;}
+/* Export */
+.export-bar{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;margin-top:1rem;}
+.export-btn{padding:.55rem 1.1rem;border-radius:9px;border:1.5px solid var(--teal);background:#fff;color:var(--teal);font-family:'DM Sans',sans-serif;font-size:.74rem;font-weight:500;cursor:pointer;transition:all .15s;}
+.export-btn:hover{background:var(--teal);color:#fff;}
+.reset-analysis{padding:.55rem 1rem;border-radius:9px;border:1px solid var(--border);background:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.7rem;cursor:pointer;margin-left:auto;}
+.reset-analysis:hover{border-color:var(--malva);color:var(--malva);}
+.hm-legend{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:.6rem;}
+.hml{display:flex;align-items:center;gap:3px;font-size:.6rem;color:var(--muted);}
+.hml-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+
+/* Admin-formulär */
+.admin-gate {
+  background:#fff;border:1.5px solid var(--border);border-radius:13px;
+  padding:1.2rem 1.4rem;margin-bottom:1.2rem;
+}
+.admin-gate h3 { font-size:.82rem;font-weight:500;color:var(--teal);margin-bottom:.3rem; }
+.admin-gate p { font-size:.72rem;color:var(--muted);margin-bottom:.9rem;line-height:1.55; }
+.admin-pw-row { display:flex;gap:.6rem;align-items:center; }
+.admin-pw-row input { flex:1;padding:.45rem .7rem;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.78rem;color:var(--text); }
+.admin-pw-row input:focus { outline:none;border-color:var(--teal); }
+.admin-pw-row button { padding:.45rem 1rem;background:var(--teal);color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.76rem;cursor:pointer; }
+.admin-pw-row button:hover { background:#0e6a96; }
+.admin-err { font-size:.68rem;color:#c0392b;margin-top:.4rem;display:none; }
+
+
+/* Resultatvyn */
+.result-view { display:none; }
+.result-view.visible { display:block; }
+
+.result-top {
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.2rem;
+}
+.dim-score-card {
+  border-radius:11px;padding:1rem 1.1rem;text-align:center;
+}
+.dsc-saker { background:var(--teal-light);border:1.5px solid #b8d8e8; }
+.dsc-satt  { background:var(--sand-l);border:1.5px solid var(--sand); }
+.dsc-samh  { background:var(--malva-l);border:1.5px solid #d4b0bf; }
+.dsc-label { font-size:.65rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem; }
+.dsc-num { font-family:'DM Serif Display',serif;font-size:2rem;line-height:1; }
+.dsc-saker .dsc-num { color:var(--teal); }
+.dsc-satt  .dsc-num { color:#7a5a2a; }
+.dsc-samh  .dsc-num { color:var(--malva); }
+.dsc-sub { font-size:.62rem;color:var(--muted);margin-top:.3rem; }
+
+/* Heatmap */
+.heatmap-wrap { background:#fff;border:1.5px solid var(--border);border-radius:13px;padding:1.1rem;margin-bottom:1.2rem; }
+.hm-title { font-size:.72rem;font-weight:500;color:var(--text);margin-bottom:.8rem; }
+.hm-grid { display:grid;grid-template-columns:90px repeat(3,1fr);gap:5px; }
+.hm-ch { padding:6px 8px;border-radius:5px;font-size:.65rem;font-weight:500;text-align:center; }
+.hm-ch1{background:var(--teal-light);color:var(--teal);}
+.hm-ch2{background:var(--sand-l);color:#7a5a2a;}
+.hm-ch3{background:var(--malva-l);color:var(--malva);}
+.hm-rlbl { display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:.65rem;color:var(--muted);text-align:right;line-height:1.3; }
+.hm-cell {
+  border-radius:8px;padding:10px 8px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  transition:transform .15s;cursor:default;
+  border:1.5px solid transparent;
+}
+.hm-cell:hover { transform:scale(1.03); }
+.hm-score { font-family:'DM Serif Display',serif;font-size:1.3rem;line-height:1; }
+.hm-lbl { font-size:.55rem;color:rgba(0,0,0,.45);line-height:1.3;max-width:80px; }
+
+/* Heatmap färger baserade på score 1-5 */
+.hc1 { background:#fde8e8;border-color:#f5b8b8; }  /* 1.0-1.9 röd */
+.hc2 { background:#fdf0dc;border-color:#f0d090; }  /* 2.0-2.9 amber */
+.hc3 { background:#fff8e8;border-color:#e8d888; }  /* 3.0-3.4 gul */
+.hc4 { background:#e8f5e8;border-color:#a8d8a8; }  /* 3.5-4.4 grön */
+.hc5 { background:#d8eef8;border-color:#90c8e0; }  /* 4.5-5.0 blå */
+
+/* DigComp-koppling */
+.digcomp-analysis { background:#fff;border:1.5px solid var(--border);border-radius:13px;padding:1.1rem 1.3rem;margin-bottom:1.2rem; }
+.da-title { font-size:.72rem;font-weight:500;color:var(--text);margin-bottom:.8rem; }
+.da-row { display:flex;align-items:flex-start;gap:.8rem;padding:.55rem 0;border-bottom:1px solid var(--border); }
+.da-row:last-child { border-bottom:none; }
+.da-comp { font-size:.68rem;font-weight:500;color:var(--teal);min-width:90px;flex-shrink:0;line-height:1.4; }
+.da-bar-wrap { flex:1; }
+.da-bar-track { height:8px;background:var(--off);border-radius:4px;overflow:hidden;border:1px solid var(--border);margin-bottom:3px; }
+.da-bar-fill { height:100%;border-radius:4px;transition:width .6s ease; }
+.da-desc { font-size:.63rem;color:var(--muted);line-height:1.4; }
+
+/* Textanalys */
+.text-analysis { background:#fff;border:1.5px solid var(--border);border-radius:13px;padding:1.1rem 1.3rem;margin-bottom:1.2rem; }
+.ta-title { font-size:.72rem;font-weight:500;color:var(--text);margin-bottom:.8rem; }
+.finding {
+  display:flex;align-items:flex-start;gap:.7rem;
+  padding:.6rem .8rem;border-radius:8px;margin-bottom:.5rem;
+  font-size:.74rem;line-height:1.55;
+}
+.finding-icon { font-size:.85rem;flex-shrink:0;margin-top:.05rem; }
+.finding.alert { background:#fde8e8;color:#8b2020; }
+.finding.caution { background:#fdf0dc;color:#7a4a10; }
+.finding.ok { background:#e8f5e8;color:#2a6a2a; }
+.finding.info { background:var(--teal-light);color:var(--teal); }
+
+/* Nivåanalys */
+.level-analysis { background:#fff;border:1.5px solid var(--border);border-radius:13px;padding:1.1rem 1.3rem;margin-bottom:1.2rem; }
+.la-title { font-size:.72rem;font-weight:500;color:var(--text);margin-bottom:.8rem; }
+.level-row { display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem; }
+.level-badge { font-size:.65rem;font-weight:500;padding:3px 9px;border-radius:6px;min-width:90px;text-align:center; }
+.lb-basic  { background:#d3f5e9;color:#085041; }
+.lb-medel  { background:#faeeda;color:#7a5a2a; }
+.lb-adv    { background:var(--malva-l);color:#4b1528; }
+.lb-high   { background:var(--teal);color:#e1f5ee; }
+.level-bar-track { flex:1;height:7px;background:var(--off);border-radius:4px;border:1px solid var(--border);overflow:hidden; }
+.level-bar-fill { height:100%;border-radius:4px; }
+.lb-basic-fill  { background:#1d9e75; }
+.lb-medel-fill  { background:var(--sand); }
+.lb-adv-fill    { background:var(--malva); }
+.lb-high-fill   { background:var(--teal); }
+.level-pct { font-size:.65rem;color:var(--muted);min-width:36px;text-align:right; }
+
+/* Export-knapp */
+.export-bar { display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;margin-top:1rem; }
+.export-btn {
+  padding:.6rem 1.2rem;border-radius:9px;border:1.5px solid var(--teal);
+  background:#fff;color:var(--teal);font-family:'DM Sans',sans-serif;
+  font-size:.76rem;font-weight:500;cursor:pointer;transition:all .15s;
+}
+.export-btn:hover { background:var(--teal);color:#fff; }
+.reset-analysis { padding:.6rem 1rem;border-radius:9px;border:1px solid var(--border);background:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.72rem;cursor:pointer;margin-left:auto; }
+.reset-analysis:hover { border-color:var(--malva);color:var(--malva); }
+
 </style>
 </head>
 <body>
@@ -289,10 +507,11 @@ main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
     <p>Det här är ett digitalt arbetsverktyg för heldagen. Det ersätter inte samtalet – det stödjer det.</p>
     <p>Du använder fyra flikar under dagen:</p>
     <ul class="modal-steps">
-      <li><span class="modal-step-n">1</span><span><strong>Röstningsmatris</strong> – markera vad som är angeläget i din verksamhet. Gör det löpande under dagen.</span></li>
+      <li><span class="modal-step-n">1</span><span><strong>Matris</strong> – en karta över AI-kunnighet i bibliotekssammanhang. Klicka på en DigComp-tagg för att fördjupa dig i kunskapsunderlaget.</span></li>
       <li><span class="modal-step-n">2</span><span><strong>Program</strong> – se var vi befinner oss och klicka på en sekvens för att läsa diskussionsfrågorna.</span></li>
       <li><span class="modal-step-n">3</span><span><strong>Kunskapsunderlag</strong> – DigComp 3.0 som referens. Slå upp när du vill förankra något i ramverket.</span></li>
-      <li><span class="modal-step-n">4</span><span><strong>Dokumentation</strong> – ett gemensamt board där vi samlar insikter och nästa steg under sekvens 5 och 6.</span></li>
+      <li><span class="modal-step-n">4</span><span><strong>Analys</strong> – resultat från Mentimeter visualiserade per bibliotek och dimension. Öppnas i sekvens 5.</span></li>
+      <li><span class="modal-step-n">5</span><span><strong>Dokumentation</strong> – ett gemensamt board där vi samlar insikter och nästa steg under sekvens 6.</span></li>
     </ul>
     <button class="modal-close" onclick="closeModal()">Kom igång</button>
   </div>
@@ -304,12 +523,13 @@ main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
       <h1>AI-kompassen</h1>
       <p>Bibliotekschefer · Region Uppsala · 22 april 2025</p>
     </div>
-    <div class="live-dot"><span class="pulse"></span>Livröstning aktiv</div>
+    <div class="live-dot"><span class="pulse"></span>AI-kompassen · 22 april</div>
   </div>
   <div class="tabbar">
-    <button class="tbtn active"    onclick="showTab('matris',this)">Röstningsmatris</button>
+    <button class="tbtn active"    onclick="showTab('matris',this)">Matris</button>
     <button class="tbtn secondary" onclick="showTab('program',this)">Program</button>
     <button class="tbtn secondary" onclick="showTab('ku',this)">Kunskapsunderlag</button>
+    <button class="tbtn secondary" onclick="showTab('analys',this)">Analys</button>
     <button class="tbtn secondary" onclick="showTab('dok',this)">Dokumentation</button>
   </div>
 </header>
@@ -320,15 +540,7 @@ main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
      PANEL 1 – RÖSTNINGSMATRIS
 ══════════════════════════════════ -->
 <div class="panel active" id="tab-matris">
-  <div class="sumbar">
-    <div><span class="snum" id="totalVotes">0</span><span class="slbl">röster totalt</span></div>
-    <div class="sdiv"></div>
-    <div><span class="snum" id="topArea">–</span><span class="slbl">hetaste dimension</span></div>
-    <div class="sdiv"></div>
-    <div class="stxt" id="sumText">Markera det område som känns mest angeläget i din verksamhet.</div>
-    <button class="rbtn" onclick="resetVotes()">Återställ mina val</button>
-  </div>
-
+  <p class="matrix-intro">Kartan visar vem som behöver vilka förutsättningar för AI-kunnighet i bibliotekssammanhang. Raderna visar användargrupp, kolumnerna visar dimension. <strong>Klicka på en DigComp-etikett</strong> i radlabeln eller på en tagg i cellen för att fördjupa dig i kunskapsunderlaget.</p>
   <div class="chead">
     <div></div>
     <div class="ch ch1"><span class="chico">⚙</span>Saker<div class="chsub">tekniken</div></div>
@@ -346,6 +558,79 @@ main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
   <div class="prog-list" id="progList"></div>
 </div>
 
+<!-- ══════════════════════════════════
+     PANEL 5 – ANALYS
+══════════════════════════════════ -->
+<div class="panel" id="tab-analys">
+  <p class="analys-intro">Ladda upp CSV-exporten från Mentimeter för att se hur de åtta biblioteken skattar sina förutsättningar längs matrisens tre dimensioner och tre nivåer. <strong>Sekvens 5</strong> – tre steg som berättar historien om gruppens AI-kunnighet. <strong>Sekvens 6</strong> – exportera underlag till uppdragsgivaren.</p>
+
+  <div class="admin-gate" id="adminGate">
+    <h3>Adminåtkomst</h3>
+    <p>Endast för processledaren. Ange lösenordet för att öppna analysen.</p>
+    <div class="admin-pw-row">
+      <input type="password" id="adminPw" placeholder="Lösenord" onkeydown="if(event.key==='Enter')checkPw()">
+      <button onclick="checkPw()">Öppna</button>
+    </div>
+    <div class="admin-err" id="adminErr">Fel lösenord.</div>
+  </div>
+
+  <div class="csv-section" id="csvSection">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem;">
+      <span style="font-size:.72rem;color:var(--muted);">Exportera CSV från Menti och ladda upp här.</span>
+      <button onclick="lockAdmin()" style="background:none;border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.65rem;padding:3px 10px;border-radius:6px;cursor:pointer;">Lås</button>
+    </div>
+    <div class="csv-format-box">
+      <strong>Förväntat CSV-format:</strong> Kolumn 1 = biblioteksnamn. Kolumn 2–4 = Saker (Medel, Avancerad, Högst avancerad). Kolumn 5–7 = Sätt. Kolumn 8–10 = Samhälle. Varje rad = en respondent. Värden: <code>1</code>–<code>5</code>.
+    </div>
+    <div class="csv-drop" id="csvDrop" onclick="document.getElementById('csvFile').click()">
+      <span class="csv-drop-icon">⬆</span>
+      <div class="csv-drop-title">Klicka eller dra hit CSV-filen</div>
+      <div class="csv-drop-sub">Exporterad från Menti · UTF-8 eller Latin-1</div>
+      <input type="file" id="csvFile" accept=".csv,.txt" onchange="handleFile(this.files[0])">
+    </div>
+    <div class="csv-status" id="csvStatus"></div>
+    <div style="margin-top:.8rem;">
+      <button class="parse-btn" id="parseBtn" onclick="parseAndAnalyse()" disabled>Generera analys →</button>
+    </div>
+  </div>
+
+  <div class="result-view" id="resultView">
+    <div class="step-nav" id="stepNav">
+      <button class="step-btn-a active" id="sbtn0" onclick="goStep(0)"><span class="sn">Steg 1</span>Vilket område är svagast?</button>
+      <button class="step-btn-a"        id="sbtn1" onclick="goStep(1)"><span class="sn">Steg 2</span>Hur ser det ut per bibliotek?</button>
+      <button class="step-btn-a"        id="sbtn2" onclick="goStep(2)"><span class="sn">Steg 3</span>Vad behöver varje bibliotek?</button>
+    </div>
+
+    <div class="step-panel-a active" id="spanel0">
+      <div class="q-card"><div class="q-lbl">Steg 1 av 3 – den stora bilden</div><div class="q-txt">Vilket av de tre områdena är svagast för gruppen som helhet?</div></div>
+      <div class="dim-grid-a" id="dimGrid"></div>
+      <div class="hm-legend">
+        <span class="hml"><span class="hml-dot" style="background:#fde8e8;border:1px solid #f5b8b8"></span>1.0–1.9 Stort behov</span>
+        <span class="hml"><span class="hml-dot" style="background:#fdf0dc;border:1px solid #f0d090"></span>2.0–2.9 Behov</span>
+        <span class="hml"><span class="hml-dot" style="background:#fff8e8;border:1px solid #e8d888"></span>3.0–3.4 Neutralt</span>
+        <span class="hml"><span class="hml-dot" style="background:#e8f5e8;border:1px solid #a8d8a8"></span>3.5–4.4 Bra</span>
+        <span class="hml"><span class="hml-dot" style="background:#d8eef8;border:1px solid #90c8e0"></span>4.5–5.0 Starkt</span>
+      </div>
+      <button class="next-btn-a" onclick="goStep(1)">Se staplar per bibliotek →</button>
+    </div>
+
+    <div class="step-panel-a" id="spanel1">
+      <div class="q-card"><div class="q-lbl">Steg 2 av 3 – bibliotek i fokus</div><div class="q-txt">Hur ser varje bibliotek ut – och var är spridningen störst?</div></div>
+      <div id="barCharts"></div>
+      <button class="next-btn-a" onclick="goStep(2)">Zooma in på ett bibliotek →</button>
+    </div>
+
+    <div class="step-panel-a" id="spanel2">
+      <div class="q-card"><div class="q-lbl">Steg 3 av 3 – biblioteksdetalj</div><div class="q-txt">Vad behöver varje enskilt bibliotek – och var är de starka?</div></div>
+      <div class="lib-sel" id="libSelector"></div>
+      <div class="lib-detail-a" id="libDetail"></div>
+      <div class="export-bar">
+        <button class="export-btn" onclick="exportWord()">Exportera underlag (Word)</button>
+        <button class="reset-analysis" onclick="resetAnalysis()">Ladda ny CSV</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- ══════════════════════════════════
      PANEL 4 – DOKUMENTATION
 ══════════════════════════════════ -->
@@ -382,14 +667,14 @@ main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
   <div class="accordion">
     <button class="acc-hdr" onclick="toggleAcc(this)">
       <div>
-        <div class="acc-title">Kunskapsnivåer – Basic till Highly Advanced</div>
-        <div class="acc-sub">De fyra proficiency-nivåerna och vad de innebär i praktiken</div>
+        <div class="acc-title">Kunskapsnivåer – Medel till Högst avancerad</div>
+        <div class="acc-sub">De tre nivåerna i fokus för dagen, plus ingångsnivån</div>
       </div>
       <span class="acc-arrow">▼</span>
     </button>
     <div class="acc-body">
       <div class="lvl-grid">
-        <div class="lcard"><div class="lhd lh1">Grundläggande</div><div class="lbd">Utför enkla uppgifter med stöd vid behov. Identifierar grundläggande funktioner i AI-drivna verktyg.<br><span class="ltag">Med vägledning</span> <span class="ltag">29 % av lärandemål</span></div></div>
+        <div class="lcard" style="opacity:.45;border-style:dashed;"><div class="lhd lh1">Grundläggande</div><div class="lbd">Ingångsnivå – inte fokus för denna dag.<br><span class="ltag">Startpunkt</span> <span class="ltag">29 % av lärandemål</span></div></div>
         <div class="lcard"><div class="lhd lh2">Medel</div><div class="lbd">Löser rutinproblem självständigt. Väljer rätt verktyg efter behov. Utvärderar AI-resultat kritiskt.<br><span class="ltag">Självständigt</span> <span class="ltag">32 % av lärandemål</span></div></div>
         <div class="lcard"><div class="lhd lh3">Avancerad</div><div class="lbd">Hanterar komplexa situationer. Stödjer andras kompetensutveckling. Anpassar sin praktik efter ny teknik.<br><span class="ltag">Stödjer andra</span> <span class="ltag">23 % av lärandemål</span></div></div>
         <div class="lcard"><div class="lhd lh4">Högst avancerad</div><div class="lbd" style="color:var(--muted)">Löser komplexa problem. Skapar nya lösningar, leder och vägleder andra.<br><span class="ltag">Leder och vägleder</span> <span class="ltag">16 % av lärandemål</span></div></div>
@@ -410,49 +695,52 @@ main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
 <script>
 // ── DATA ─────────────────────────────────────────────────────────────────────
 
-const ROWS = ['Operativt','Taktiskt','Strategiskt'];
-const RSUBS = { Operativt:'medarbetarnivå', Taktiskt:'chef- och gruppnivå', Strategiskt:'lednings- och samhällsnivå' };
+const ROWS = ['Medarbetare','Specialister och arbetsledare','Ledning'];
+const RSUBS = { 'Medarbetare':'', 'Specialister och arbetsledare':'', 'Ledning':'' };
 
 const CELLS = [
-  { id:'op_s',  row:'Operativt',  col:'Saker',    fc:'bt',
-    title:'Vilka AI-verktyg finns i personalens vardag?',
-    qs:['Vilka tjänster används redan i dag?','Vilka är lämpliga för biblioteksuppdraget?','Hur skapar vi trygga ramar för att pröva nytt?'],
-    tag:'DigComp 1.1–1.3 · sökning, värdering, hantering' },
-  { id:'op_sa', row:'Operativt',  col:'Sätt',     fc:'bs',
-    title:'Vilka förmågor behöver personalen nu?',
-    qs:['Hur skapar vi handlingsutrymme för experimenterande?','Vilka MIK-förmågor är mest akuta?','Hur stöttar chefen utan att ta över?'],
-    tag:'DigComp 3.1 · 4.2 · innehåll och persondata' },
-  { id:'op_m',  row:'Operativt',  col:'Samhälle', fc:'bm',
-    title:'Vad möter personalen i besöksmötet?',
-    qs:['Hur möter vi besökare som frågar om AI?','Vad innebär demokratiuppdraget i AI-vardagen?','Vad skiljer bibliotekets roll från andras?'],
-    tag:'DigComp 2.3 · medborgarperspektiv' },
-  { id:'tak_s', row:'Taktiskt',   col:'Saker',    fc:'bt',
-    title:'Vilken infrastruktur och vilka riktlinjer behövs?',
-    qs:['Har vi tagit ställning till godkända AI-verktyg?','Hur kartlägger vi nuläget med DigComp som karta?','Vem ansvarar för att hålla kunskapen levande?'],
-    tag:'DigComp 5.2 · identifiera behov och tekniklösningar' },
-  { id:'tak_sa',row:'Taktiskt',   col:'Sätt',     fc:'bs',
-    title:'Hur leder vi kompetensutveckling utan eldsjälsberoende?',
-    qs:['Hur gör vi MIK-arbetet systematiskt?','Hur leder vi i samverkan och samsyn?','Hur synliggör vi det arbete som görs?'],
-    tag:'DigComp 5.4 · stödja andras kompetensutveckling' },
-  { id:'tak_m', row:'Taktiskt',   col:'Samhälle', fc:'bm',
-    title:'Hur bidrar biblioteket till kommunens AI-strategi?',
-    qs:['Har chefsgruppen samsyn kring bibliotekets roll?','Hur positionerar vi oss i kommunens digitaliseringsarbete?','Vilka samarbetspartner behöver vi?'],
-    tag:'DigComp 2.4 · samarbete och samskapande' },
-  { id:'str_s', row:'Strategiskt',col:'Saker',    fc:'bt',
-    title:'Bibliotekets plats i kommunal AI-infrastruktur',
-    qs:['Hur positionerar vi biblioteket som AI-kunnig aktör?','Vilka politiska beslut behöver vi påverka?','Vad kräver vi av kommunen för att klara uppdraget?'],
-    tag:'DigComp 5.3 · kreativa lösningar med ny teknik' },
-  { id:'str_sa',row:'Strategiskt',col:'Sätt',     fc:'bs',
-    title:'Hur stärker vi bibliotekets röst utåt?',
-    qs:['Hur kommunicerar vi bibliotekets värde till politiker?','Hur bygger vi lärande organisationer som håller?','Hur skapar vi gemensamma berättelser i regionen?'],
-    tag:'DigComp 5.4 (avancerad) · leda och utbilda' },
-  { id:'str_m', row:'Strategiskt',col:'Samhälle', fc:'bm',
-    title:'Bibliotekets demokratiska roll i AI-samhället',
-    qs:['Vad innebär digital inkludering när AI är normen?','Hur undviker vi att digitaliseringen lämnar folk utanför?','Vilken framtid vill vi vara med och bygga?'],
-    tag:'DigComp 2.3 + 4.3 · medborgarperspektiv och välmående' },
-];
+  // RAD 1 – MEDEL: löser uppgifter självständigt, väljer rätt verktyg, utvärderar kritiskt
+  { id:'med_s',  row:'Medarbetare', col:'Saker',    colCls:'col-saker',
+    title:'Jag väljer och använder AI-verktyg som passar biblioteksuppdraget',
+    desc:'Självständigt söka, filtrera och värdera information med AI-drivna verktyg – och kunna skilja relevanta resultat från irrelevanta.',
+    tag:'DigComp 1.1 · 1.2', areaId:0 },
+  { id:'med_sa', row:'Medarbetare', col:'Sätt',     colCls:'col-satt',
+    title:'Jag skapar och granskar AI-genererat innehåll kritiskt',
+    desc:'Självständigt skapa och omarbeta digitalt innehåll med AI – och tillämpa källkritik på det som genereras.',
+    tag:'DigComp 3.1 · 3.2', areaId:2 },
+  { id:'med_m',  row:'Medarbetare', col:'Samhälle', colCls:'col-samh',
+    title:'Jag möter besökare med frågor om AI och digital vardag',
+    desc:'Självständigt hantera frågor om AI utifrån bibliotekets demokratiuppdrag – med kunskap om integritet och persondata.',
+    tag:'DigComp 2.3 · 4.2', areaId:1 },
 
-const VLBLS = ['Hög prioritet för oss','Delvis aktuellt','Inte där vi är nu'];
+  // RAD 2 – AVANCERAD: stödjer andras lärande, anpassar sin praktik
+  { id:'adv_s',  row:'Specialister och arbetsledare', col:'Saker',    colCls:'col-saker',
+    title:'Vi har infrastruktur och riktlinjer för trygg AI-användning',
+    desc:'Bedöma verksamhetens behov, identifiera lämpliga AI-lösningar och skapa förutsättningar för att andra ska kunna använda dem tryggt.',
+    tag:'DigComp 5.2 · 4.2', areaId:4 },
+  { id:'adv_sa', row:'Specialister och arbetsledare', col:'Sätt',     colCls:'col-satt',
+    title:'Jag stödjer andras kompetensutveckling kring AI systematiskt',
+    desc:'Kartlägga kollegors kompetensbehov, sammanställa lärtillfällen och stödja andras självständighet i digitala miljöer.',
+    tag:'DigComp 5.4', areaId:4 },
+  { id:'adv_m',  row:'Specialister och arbetsledare', col:'Samhälle', colCls:'col-samh',
+    title:'Vi har samsyn om bibliotekets roll i kommunens digitaliseringsarbete',
+    desc:'Samarbeta med andra aktörer kring digital inkludering och representera bibliotekets perspektiv i kommunens digitaliseringsstrategi.',
+    tag:'DigComp 2.4 · 2.3', areaId:1 },
+
+  // RAD 3 – HÖGST AVANCERAD: leder och vägleder, skapar nya lösningar
+  { id:'hog_s',  row:'Ledning', col:'Saker',    colCls:'col-saker',
+    title:'Biblioteket är en aktiv röst i kommunens AI-strategi',
+    desc:'Leda utvecklingen av nya lösningar, positionera biblioteket som AI-kunnig aktör och påverka strategiska beslut på kommunal nivå.',
+    tag:'DigComp 5.3 · 5.4', areaId:4 },
+  { id:'hog_sa', row:'Ledning', col:'Sätt',     colCls:'col-satt',
+    title:'Jag leder lärande om AI som håller över tid',
+    desc:'Utforma lärmaterial, mentora kollegor och bygga strukturer för kollegialt lärande som inte är beroende av enskilda eldsjälar.',
+    tag:'DigComp 5.4', areaId:4 },
+  { id:'hog_m',  row:'Ledning', col:'Samhälle', colCls:'col-samh',
+    title:'Vi driver digital inkludering som en strukturfråga i samhället',
+    desc:'Leda samtal om bibliotekets demokratiska roll, forma gemensamma berättelser och hålla inkluderingsperspektivet levande när AI normaliseras.',
+    tag:'Ledning · alla användargrupper · DigComp Högst avancerad', areaId:1 },
+];
 
 const AREAS = [
   { id:0, cls:'a1', nr:'Område 1', title:'Information, sökning och hantering',
@@ -513,85 +801,43 @@ function vc(id,i){ return ((votes[id]||[])[i])||0; }
 function vt(id){ return (votes[id]||[]).reduce((a,b)=>a+(b||0),0); }
 
 // ── BUILD MATRIS ──────────────────────────────────────────────────────────────
+const ROW_BADGE = {
+  'Medarbetare':             { cls:'rb-medel', label:'DigComp Medel',          areaId:4 },
+  'Specialister och arbetsledare': { cls:'rb-adv',   label:'DigComp Avancerad',      areaId:4 },
+  'Ledning':                 { cls:'rb-hog',   label:'DigComp Högst avancerad',areaId:4 },
+};
+
 function buildMatrix(){
   const wrap=document.getElementById('matrixRows');
   ROWS.forEach(row=>{
     const div=document.createElement('div'); div.className='mrow';
-    div.innerHTML=`<div class="rlbl"><div class="rlbl-t">${row}</div><div class="rlbl-s">${RSUBS[row]}</div></div>`;
-    CELLS.filter(c=>c.row===row).forEach(c=>{
-      const el=document.createElement('div'); el.className='mcell'; el.id='mc_'+c.id;
-      const mv=mine[c.id];
+    const badge = ROW_BADGE[row] || {};
+    div.innerHTML=`<div class="rlbl">
+      <div class="rlbl-t">${row}</div>
+      ${badge.cls ? `<span class="rlbl-badge ${badge.cls}" onclick="openKuArea(${badge.areaId||4},event)" style="cursor:pointer" title="Öppna i kunskapsunderlaget">${badge.label} ↗</span>` : ''}
+    </div>`;
+    CELLS.filter(cell=>cell.row===row).forEach(cell=>{
+      const el=document.createElement('div');
+      el.className=`mcell ${cell.colCls||''}`;
+      el.id='mc_'+cell.id;
       el.innerHTML=`
-        <div class="ct">${c.title}</div>
-        <ul class="cqs">${c.qs.map(q=>`<li>${q}</li>`).join('')}</ul>
-        <span class="dtag">${c.tag}</span>
-        <div class="vsec">
-          <div class="vprompt">Hur angeläget är detta för er verksamhet?</div>
-          <div class="vopts">${VLBLS.map((l,i)=>`
-            <div class="vopt" onclick="castVote('${c.id}',${i})">
-              <div class="vbtn${mv===i?' voted':''}" data-opt="${i}">${mv===i?'✓':''}</div>
-              <div class="vlbl">${l}</div>
-            </div>`).join('')}</div>
-          <div class="bars">${VLBLS.map((l,i)=>`
-            <div class="brow">
-              <div class="blbl">${l}</div>
-              <div class="btrack"><div class="bfill ${c.fc}" data-bar="${i}" style="width:0%"></div></div>
-              <div class="bcnt" data-cnt="${i}">0</div>
-            </div>`).join('')}</div>
-        </div>`;
+        <div class="ct">${cell.title}</div>
+        <div class="cdesc">${cell.desc}</div>
+        <span class="dtag" onclick="openKuArea(${cell.areaId},event)" title="Öppna i kunskapsunderlaget">
+          ${cell.tag} <span class="dtag-arrow">↗</span>
+        </span>`;
       div.appendChild(el);
     });
     wrap.appendChild(div);
   });
 }
 
-function renderMatrix(){
-  let topId=null,topN=0;
-  CELLS.forEach(c=>{const t=vt(c.id);if(t>topN){topN=t;topId=c.id;}});
-  CELLS.forEach(c=>{
-    const el=document.getElementById('mc_'+c.id); if(!el)return;
-    const tot=vt(c.id),mv=mine[c.id],isTop=c.id===topId&&topN>0;
-    el.classList.toggle('top',isTop);
-    const badge=el.querySelector('.topbadge');
-    if(isTop&&!badge){const b=document.createElement('div');b.className='topbadge';b.textContent='Mest prioriterat';el.appendChild(b);}
-    if(!isTop&&badge)badge.remove();
-    VLBLS.forEach((_,i)=>{
-      const btn=el.querySelector(`[data-opt="${i}"]`);
-      const bar=el.querySelector(`[data-bar="${i}"]`);
-      const cnt=el.querySelector(`[data-cnt="${i}"]`);
-      if(btn){btn.classList.toggle('voted',mv===i);btn.textContent=mv===i?'✓':'';}
-      if(bar){bar.style.width=(tot>0?Math.round(vc(c.id,i)/tot*100):0)+'%';}
-      if(cnt)cnt.textContent=vc(c.id,i);
-    });
-  });
-  const total=CELLS.reduce((a,c)=>a+vt(c.id),0);
-  document.getElementById('totalVotes').textContent=total;
-  const cv={Saker:0,Sätt:0,Samhälle:0};
-  CELLS.forEach(c=>{cv[c.col]=(cv[c.col]||0)+vt(c.id);});
-  const topC=Object.entries(cv).sort((a,b)=>b[1]-a[1])[0];
-  document.getElementById('topArea').textContent=topC[1]>0?topC[0]:'–';
-  if(topId&&topN>0){
-    const tc=CELLS.find(c=>c.id===topId);
-    document.getElementById('sumText').innerHTML=`Mest markerat: <strong>${tc.title}</strong> (${topN} röst${topN!==1?'er':''}) · ${tc.row}-nivå, ${tc.col}-dimensionen.`;
-  } else {
-    document.getElementById('sumText').textContent='Markera det område som känns mest angeläget i din verksamhet.';
-  }
-}
+function renderMatrix(){ /* röstning borttagen */ }
 
-function castVote(id,i){
-  if(!votes[id])votes[id]=[0,0,0];
-  const prev=mine[id];
-  if(prev===i){votes[id][i]=Math.max(0,votes[id][i]-1);delete mine[id];}
-  else{if(prev!==undefined)votes[id][prev]=Math.max(0,votes[id][prev]-1);votes[id][i]=(votes[id][i]||0)+1;mine[id]=i;}
-  save();renderMatrix();
-}
+function castVote(){ /* röstning borttagen */ }
 
-function resetVotes(){
-  Object.entries(mine).forEach(([id,i])=>{if(votes[id])votes[id][i]=Math.max(0,votes[id][i]-1);});
-  mine={};save();renderMatrix();
-}
+function resetVotes(){ /* röstning borttagen */ }
 
-// ── BUILD AREAS ───────────────────────────────────────────────────────────────
 function buildAreas(){
   const grid=document.getElementById('areaGrid');
   AREAS.forEach(a=>{
@@ -615,6 +861,27 @@ function selectArea(id){
     </div>`).join('')}</div>`;
 }
 
+// Navigerar från matris-tagg till kunskapsunderlag och öppnar rätt kompetensområde
+function openKuArea(areaId, event){
+  event.stopPropagation();
+  // Byt till KU-fliken
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-ku').classList.add('active');
+  // Aktivera rätt tab-knapp
+  document.querySelectorAll('.tbtn').forEach(b=>{
+    if(b.textContent.trim()==='Kunskapsunderlag') b.classList.add('active');
+  });
+  // Öppna accordion
+  const accBtns = document.querySelectorAll('.acc-hdr');
+  accBtns.forEach(h=>{h.classList.remove('open');h.nextElementSibling.classList.remove('open');});
+  if(accBtns[0]){ accBtns[0].classList.add('open'); accBtns[0].nextElementSibling.classList.add('open'); }
+  // Välj kompetensområde
+  setTimeout(()=>selectArea(areaId), 50);
+  // Scrolla upp
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
 // ── ACCORDION ─────────────────────────────────────────────────────────────────
 function toggleAcc(btn){
   const body=btn.nextElementSibling;
@@ -636,11 +903,11 @@ function showTab(id,btn){
 const PROGRAM = [
   { type:'break', startH:9,  startM:0,  endH:9,  endM:30,
     title:'Välkomna och introduktion',
-    desc:'AI-kompassen presenteras. Praktisk info om dagen och om röstningsverktyget.' },
+    desc:'AI-kompassen presenteras. Praktisk info om dagen och om verktygen vi använder.' },
   { type:'seq',   startH:9,  startM:30, endH:10, endM:15,
     nr:'Sekvens 1', title:'Vad är AI-kunnighet?',
     desc:'DigComp 3.0 som gemensamt kartspråk. Fem kompetensområden och fyra nivåer. Live-exempel: AI genererar en infografik över ramverket.',
-    tag:'DigComp 1.2 · 2.1 · 5.4',
+    tag:'Matris · alla tre användargrupper',
     qs:[
       'Var befinner sig er personal i dag – på vilka nivåer i ramverket?',
       'Var befinner sig du som chef?',
@@ -651,45 +918,45 @@ const PROGRAM = [
   { type:'seq',   startH:10, startM:30, endH:11, endM:30,
     nr:'Sekvens 2', title:'Saker – verktyg och infrastruktur',
     desc:'Vilka AI-tjänster finns i verksamhetens vardag? Vad kräver ledarskapet? Live-exempel: AI jämför biblioteksplaner från Uppsala-länet.',
-    tag:'DigComp 5.2 · 1.1 · 4.2',
+    tag:'Specialister och arbetsledare · Ledning · DigComp Avancerad–Högst avancerad',
     qs:[
-      'Har er organisation tagit ställning till vilka AI-verktyg som är godkända? Vem ansvarar för det?',
-      'Hur skapar vi handlingsutrymme för personal att experimentera tryggt?',
-      'Vad behöver biblioteksplanen säga om AI – och vem driver det arbetet?',
+      'Vilka förutsättningar behöver medarbetare för att kunna använda AI-verktyg tryggt i vardagen?',
+      'Vad behöver specialister och arbetsledare för att kunna stödja kollegor i verktygsfrågor?',
+      'Vilket mandat behöver ledningen ta för riktlinjer och infrastruktur – och vem driver det?',
     ]},
   { type:'seq',   startH:11, startM:30, endH:12, endM:15,
     nr:'Sekvens 3', title:'Sätt – kompetensutveckling i samsyn',
     desc:'Hur leder vi utan eldsjälsberoende? Samsyn som processfråga. Live-exempel: AI formulerar kompetensmål från biblioteksplan och DigComp.',
-    tag:'DigComp 5.4 · 2.4',
+    tag:'Specialister och arbetsledare · DigComp Avancerad',
     qs:[
-      'Hur ser kompetensutvecklingen kring AI ut i er verksamhet i dag – vem driver den, och varför?',
-      'Hur gör vi MIK-arbetet systematiskt i hela organisationen – inte beroende av eldsjälar?',
-      'Vad behöver finnas på plats – tid, mandat, verktyg – för att mål ska följas upp?',
-      'Hur leder vi i samverkan och samsyn med kollegor i regionen?',
+      'Vilka förutsättningar behöver medarbetare för att lära sig och tillämpa AI i sitt arbete?',
+      'Hur skapar specialister och arbetsledare strukturer för kollegialt lärande – utan eldsjälsberoende?',
+      'Vilket ansvar behöver ledningen ta för att kompetensutveckling faktiskt sker och följs upp?',
+      'Hur skapar vi samsyn i chefsgruppen om vad som krävs – och av vem?',
     ]},
   { type:'break', startH:12, startM:15, endH:13, endM:15,
     title:'Lunch', desc:'' },
   { type:'seq',   startH:13, startM:15, endH:14, endM:15,
     nr:'Sekvens 4', title:'Samhälle – demokratiuppdraget',
     desc:'Bibliotekets roll när AI förändrar medborgarnas informationsmiljö. Live-exempel: AI tar fram presentationsunderlag till nämnden.',
-    tag:'DigComp 2.3 · 4.3',
+    tag:'Ledning · alla användargrupper · DigComp Högst avancerad',
     qs:[
-      'Hur är bibliotekets roll definierad i er kommuns digitaliseringsstrategi – eller saknas ni där?',
-      'Vad innebär digital inkludering när AI är normen – och vem lämnas utanför?',
-      'Hur stärker vi bibliotekets röst gentemot politiker och förvaltningsledning?',
-      'Kan vi formulera en gemensam berättelse om bibliotekets demokratiska roll i AI-samhället?',
+      'Vilka förutsättningar behöver medarbetare för att möta besökare med frågor om AI och demokrati?',
+      'Hur understödjer specialister och arbetsledare att bibliotekets demokratiuppdrag är synligt i verksamheten?',
+      'Vilket mandat behöver ledningen ta för att positionera biblioteket i kommunens AI-strategi?',
+      'Vilken gemensam berättelse behöver vi – för oss själva, för politiken och för medborgarna?',
     ]},
   { type:'break', startH:14, startM:15, endH:14, endM:30,
     title:'Fika', desc:'' },
   { type:'seq',   startH:14, startM:30, endH:15, endM:0,
-    nr:'Sekvens 5', title:'Röstresultaten – vad sade matrisen?',
-    desc:'Gemensam genomgång av prioriteringarna. Var finns samsyn, var finns skillnader?',
-    tag:'Matris · reflektion',
+    nr:'Sekvens 5', title:'Analysresultaten – vad berättar datan?',
+    desc:'Gemensam genomgång av Menti-resultaten per bibliotek och dimension. Heatmap och mönster visas i analyspanelen.',
+    tag:'Analys · DigComp-nivåer · Gidlund',
     qs:[
-      'Vilka celler fick flest röster på "Hög prioritet"?',
-      'Var är skillnaderna störst mellan deltagarna – och vad berättar det?',
-      'Vilka av de högt prioriterade frågorna kan vi börja arbeta med redan nu?',
-      'Vad saknas i matrisen som vi behöver lägga till i samtalet?',
+      'Vilket område – Saker, Sätt eller Samhälle – är svagast för gruppen som helhet?',
+      'Var är spridningen störst mellan biblioteken – och vad berättar det?',
+      'Vilken användargrupp – medarbetare, specialister och arbetsledare eller ledning – har störst behov av förutsättningar?',
+      'Vad är den viktigaste gemensamma iakttagelsen att ta med in i nästa sekvens?',
     ]},
   { type:'seq',   startH:15, startM:0,  endH:16, endM:0,
     nr:'Sekvens 6', title:'Framåt – samsyn och nästa steg',
@@ -764,6 +1031,297 @@ function buildProgram(){
   });
 }
 
+
+// ── ANALYS ────────────────────────────────────────────────────────────────────────────────
+const ADMIN_PW='kompass25';
+const SCORES_KEY='aikomp_scores_v3';
+
+const LIBRARIES=['Enköping','Heby','Håbo','Knivsta','Tierp','Uppsala','Älvkarleby','Östhammar'];
+
+const COL_MAP=[
+  {id:'med_s', dim:'saker',    lbl:'Medel',          full:'Jag väljer och använder AI-verktyg som passar uppdraget'},
+  {id:'adv_s', dim:'saker',    lbl:'Avancerad',      full:'Vi har riktlinjer och infrastruktur för trygg AI-användning'},
+  {id:'hog_s', dim:'saker',    lbl:'Högst avancerad',full:'Biblioteket är en aktiv röst i kommunens AI-strategi'},
+  {id:'med_sa',dim:'satt',     lbl:'Medel',          full:'Jag skapar och granskar AI-genererat innehåll kritiskt'},
+  {id:'adv_sa',dim:'satt',     lbl:'Avancerad',      full:'Jag stödjer andras kompetensutveckling systematiskt'},
+  {id:'hog_sa',dim:'satt',     lbl:'Högst avancerad',full:'Jag leder lärande om AI som håller över tid'},
+  {id:'med_m', dim:'samhalle', lbl:'Medel',          full:'Jag möter besökare med frågor om AI och digital vardag'},
+  {id:'adv_m', dim:'samhalle', lbl:'Avancerad',      full:'Vi har samsyn om bibliotekets roll i digitaliseringsarbetet'},
+  {id:'hog_m', dim:'samhalle', lbl:'Högst avancerad',full:'Vi driver digital inkludering som en strukturfråga'},
+];
+
+const DIMS=[
+  {k:'saker',   lbl:'Saker',    sub:'tekniken',  bg:'#e0eff6',tc:'#064564'},
+  {k:'satt',    lbl:'Sätt',     sub:'metoderna', bg:'#faf4ed',tc:'#7a5a2a'},
+  {k:'samhalle',lbl:'Samhälle', sub:'kontexten', bg:'#f3eaee',tc:'#825a6e'},
+];
+
+let parsedData=null, selLib=null;
+
+function sc(v){if(v<2)return'#c0392b';if(v<3)return'#e67e22';if(v<3.5)return'#8a7a20';if(v<4.5)return'#27ae60';return'#1a6a9a';}
+function hcBg(v){if(v<2)return'#fde8e8';if(v<3)return'#fdf0dc';if(v<3.5)return'#fff8e8';if(v<4.5)return'#e8f5e8';return'#d8eef8';}
+function hcBo(v){if(v<2)return'#f5b8b8';if(v<3)return'#f0d090';if(v<3.5)return'#e8d888';if(v<4.5)return'#a8d8a8';return'#90c8e0';}
+function avg(a){return a.length?a.reduce((s,v)=>s+v,0)/a.length:0;}
+function pct(v){return Math.round((v/5)*100)+'%';}
+
+function cellScores(id){const i=COL_MAP.findIndex(c=>c.id===id);return (parsedData||[]).map(r=>r.scores[i]);}
+function dimAvg(dim){return avg(COL_MAP.filter(c=>c.dim===dim).flatMap(c=>cellScores(c.id)));}
+function libCell(lib,id){const i=COL_MAP.findIndex(c=>c.id===id);return avg((parsedData||[]).filter(r=>r.lib===lib).map(r=>r.scores[i]));}
+function libDimAvg(lib,dim){return avg(COL_MAP.filter(c=>c.dim===dim).map(c=>libCell(lib,c.id)));}
+function uniqueLibs(){return [...new Set((parsedData||[]).map(r=>r.lib))].sort();}
+
+// Admin
+function checkPw(){
+  if(document.getElementById('adminPw').value===ADMIN_PW){
+    document.getElementById('adminGate').style.display='none';
+    document.getElementById('adminErr').style.display='none';
+    try{const s=JSON.parse(localStorage.getItem(SCORES_KEY)||'null');if(s&&s.length>0){parsedData=s;showResult();return;}}catch(e){}
+    document.getElementById('csvSection').classList.add('visible');
+  } else { document.getElementById('adminErr').style.display='block'; }
+}
+function lockAdmin(){
+  document.getElementById('csvSection').classList.remove('visible');
+  document.getElementById('adminGate').style.display='block';
+  document.getElementById('adminPw').value='';
+}
+
+// CSV
+let rawCsv=null;
+(function(){
+  const d=document.getElementById('csvDrop');
+  if(!d)return;
+  d.addEventListener('dragover',e=>{e.preventDefault();d.classList.add('dragover');});
+  d.addEventListener('dragleave',()=>d.classList.remove('dragover'));
+  d.addEventListener('drop',e=>{e.preventDefault();d.classList.remove('dragover');handleFile(e.dataTransfer.files[0]);});
+})();
+
+function handleFile(file){
+  if(!file)return;
+  const st=document.getElementById('csvStatus');
+  st.className='csv-status';st.textContent='Läser fil…';
+  const r=new FileReader();
+  r.onload=e=>{
+    rawCsv=e.target.result;
+    const n=rawCsv.split('\n').filter(l=>l.trim()).length;
+    st.textContent='✓ '+file.name+' – '+n+' rader lästa.';
+    document.getElementById('parseBtn').disabled=false;
+  };
+  r.onerror=()=>{const st=document.getElementById('csvStatus');st.className='csv-status csv-error';st.textContent='Kunde inte läsa filen.';};
+  r.readAsText(file,'UTF-8');
+}
+
+function parseCSV(text){
+  text=text.replace(/^﻿/,'');
+  const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
+  const first=lines[0].split(/[,;]/)[0].replace(/"/g,'').trim().toLowerCase();
+  const isHdr=isNaN(parseFloat(first))&&!LIBRARIES.some(l=>l.toLowerCase()===first);
+  const rows=[];
+  (isHdr?lines.slice(1):lines).forEach(line=>{
+    const p=line.split(/[,;]/).map(x=>x.replace(/"/g,'').trim());
+    if(p.length<10)return;
+    const scores=p.slice(1,10).map(v=>{const n=parseFloat(v);return isNaN(n)?null:Math.min(5,Math.max(1,n));});
+    if(scores.some(s=>s===null))return;
+    rows.push({lib:p[0],scores});
+  });
+  return rows;
+}
+
+function parseAndAnalyse(){
+  if(!rawCsv){alert('Ingen fil laddad.');return;}
+  try{
+    parsedData=parseCSV(rawCsv);
+    if(!parsedData.length)throw new Error('Inga giltiga rader.');
+    localStorage.setItem(SCORES_KEY,JSON.stringify(parsedData));
+    document.getElementById('csvSection').classList.remove('visible');
+    showResult();
+  }catch(e){
+    const st=document.getElementById('csvStatus');
+    st.className='csv-status csv-error';st.textContent='Fel: '+e.message;
+  }
+}
+
+function showResult(){
+  document.getElementById('resultView').classList.add('visible');
+  buildDimGrid();
+  buildBarCharts();
+  buildLibSelector();
+  goStep(0);
+}
+
+// Steg 1 – dimensionskort
+function buildDimGrid(){
+  const g=document.getElementById('dimGrid');
+  if(!g)return;
+  g.innerHTML='';
+  const avgs=DIMS.map(d=>({...d,a:dimAvg(d.k)}));
+  const sorted=[...avgs].sort((a,b)=>a.a-b.a);
+  avgs.forEach(d=>{
+    const rank=sorted.findIndex(s=>s.k===d.k);
+    const allV=COL_MAP.filter(c=>c.dim===d.k).flatMap(c=>cellScores(c.id));
+    const lo=Math.min(...allV),hi=Math.max(...allV);
+    const div=document.createElement('div');
+    div.className='dim-card-a';
+    div.style.background=hcBg(d.a);div.style.borderColor=hcBo(d.a);
+    div.innerHTML=`<div class="dca-lbl" style="color:${d.tc}">${d.lbl}</div>
+      <div class="dca-num" style="color:${sc(d.a)}">${d.a.toFixed(1)}</div>
+      <div class="dca-rank" style="color:${sc(d.a)}">${rank===0?'Svagast → prioritera':rank===2?'Starkast → bygg vidare':'Mellanfält'}</div>
+      <div class="dca-span">spann ${lo.toFixed(1)}–${hi.toFixed(1)}</div>
+      <div class="dca-bar"><div class="dca-fill" style="width:${pct(d.a)};background:${sc(d.a)}"></div></div>`;
+    g.appendChild(div);
+  });
+}
+
+// Steg 2 – staplar per dimension
+function buildBarCharts(){
+  const c=document.getElementById('barCharts');
+  if(!c)return;
+  c.innerHTML='';
+  const libs=uniqueLibs();
+  DIMS.forEach(dim=>{
+    const sec=document.createElement('div');sec.className='bar-section';
+    const grand=dimAvg(dim.k);
+    sec.innerHTML=`<div class="dim-sec-hdr" style="background:${dim.bg};color:${dim.tc}">${dim.lbl} – ${dim.sub} · snitt alla ${grand.toFixed(1)}</div>`;
+    const libData=libs.map(lib=>({lib,v:libDimAvg(lib,dim.k)})).sort((a,b)=>b.v-a.v);
+    libData.forEach(({lib,v})=>{
+      const w=Math.round((v/5)*100);
+      const row=document.createElement('div');row.className='bar-r';
+      row.innerHTML=`<div class="bar-lib">${lib}</div>
+        <div class="bar-track"><div class="bar-fill-a" style="width:${w}%;background:${sc(v)}">
+          ${w>14?`<span class="bar-val-a">${v.toFixed(1)}</span>`:''}
+        </div></div>
+        <div class="bar-num-a" style="color:${sc(v)}">${w<=14?v.toFixed(1):''}</div>`;
+      sec.appendChild(row);
+    });
+    c.appendChild(sec);
+  });
+}
+
+// Steg 3 – biblioteksdetalj
+function buildLibSelector(){
+  const s=document.getElementById('libSelector');
+  if(!s)return;
+  s.innerHTML='';
+  const libs=uniqueLibs();
+  if(!selLib||!libs.includes(selLib))selLib=libs[0];
+  libs.forEach(lib=>{
+    const btn=document.createElement('button');
+    btn.className='lib-btn-a'+(lib===selLib?' sel':'');
+    btn.textContent=lib;
+    btn.onclick=()=>{
+      selLib=lib;
+      document.querySelectorAll('.lib-btn-a').forEach(b=>b.classList.toggle('sel',b.textContent===lib));
+      renderLibDetail();
+    };
+    s.appendChild(btn);
+  });
+  renderLibDetail();
+}
+
+function renderLibDetail(){
+  const d=document.getElementById('libDetail');
+  if(!d||!selLib)return;
+  const total=avg(COL_MAP.map(c=>libCell(selLib,c.id)));
+  let html=`<div class="lib-detail-name">${selLib} <span style="font-size:.78rem;font-weight:400;color:${sc(total)}">· totalt ${total.toFixed(1)} / 5.0</span></div>`;
+  DIMS.forEach(dim=>{
+    const dv=libDimAvg(selLib,dim.k);
+    html+=`<div class="detail-dim"><div class="detail-dim-hdr" style="color:${dim.tc}">${dim.lbl} – snitt ${dv.toFixed(1)}</div>`;
+    COL_MAP.filter(c=>c.dim===dim.k).forEach(c=>{
+      const v=libCell(selLib,c.id);const w=Math.round((v/5)*100);
+      html+=`<div class="detail-r">
+        <div class="detail-lbl">${c.lbl}</div>
+        <div class="bar-track"><div class="bar-fill-a" style="width:${w}%;background:${sc(v)}">
+          ${w>14?`<span class="bar-val-a">${v.toFixed(1)}</span>`:''}
+        </div></div>
+        <div class="bar-num-a" style="color:${sc(v)}">${w<=14?v.toFixed(1):''}</div>
+      </div>`;
+    });
+    html+=`</div>`;
+  });
+  // Iakttagelser
+  html+=`<div style="margin-top:.6rem;border-top:0.5px solid var(--border);padding-top:.6rem;">`;
+  const dv=DIMS.map(d=>({lbl:d.lbl,v:libDimAvg(selLib,d.k)})).sort((a,b)=>a.v-b.v);
+  const weak=dv[0],strong=dv[2];
+  const cv=COL_MAP.map(c=>({lbl:c.lbl+' ('+DIMS.find(d=>d.k===c.dim).lbl+')',v:libCell(selLib,c.id)})).sort((a,b)=>a.v-b.v);
+  if(weak.v<2.5) html+=`<div class="strip s-alert">Svagast i ${weak.lbl} (${weak.v.toFixed(1)}) – strukturellt stöd behövs.</div>`;
+  else if(weak.v<3.5) html+=`<div class="strip s-caut">Störst potential i ${weak.lbl} (${weak.v.toFixed(1)}).</div>`;
+  if(strong.v>=3.8) html+=`<div class="strip s-ok">Starkast i ${strong.lbl} (${strong.v.toFixed(1)}) – bygg vidare härifrån.</div>`;
+  if(cv[0].v<2.5) html+=`<div class="strip s-alert">Lägst: ${cv[0].lbl} (${cv[0].v.toFixed(1)}).</div>`;
+  const high=COL_MAP.filter(c=>libCell(selLib,c.id)>=4);
+  if(high.length) html+=`<div class="strip s-info">Starkt: ${high.map(c=>c.lbl+' ('+libCell(selLib,c.id).toFixed(1)+')').join(', ')}.</div>`;
+  html+=`</div>`;
+  d.innerHTML=html;
+}
+
+// Navigation
+function goStep(n){
+  document.querySelectorAll('.step-panel-a').forEach((p,i)=>p.classList.toggle('active',i===n));
+  document.querySelectorAll('.step-btn-a').forEach((b,i)=>{
+    b.classList.remove('active','done');
+    if(i===n)b.classList.add('active');
+    else if(i<n)b.classList.add('done');
+  });
+}
+
+function resetAnalysis(){
+  parsedData=null;rawCsv=null;
+  localStorage.removeItem(SCORES_KEY);
+  document.getElementById('resultView').classList.remove('visible');
+  document.getElementById('csvSection').classList.add('visible');
+  document.getElementById('csvStatus').textContent='';
+  document.getElementById('parseBtn').disabled=true;
+}
+
+// Word-export
+function exportWord(){
+  if(!parsedData)return;
+  const libs=uniqueLibs();
+  const da={saker:dimAvg('saker'),satt:dimAvg('satt'),samhalle:dimAvg('samhalle')};
+  const grand=avg(Object.values(da));
+  let rows='';
+  libs.forEach(lib=>{
+    const cells=COL_MAP.map(c=>libCell(lib,c.id));
+    const tot=avg(cells);
+    rows+=`<tr><td style="padding:5px 8px;border:1px solid #ddd;font-weight:500">${lib}</td>
+      ${cells.map(v=>`<td style="padding:5px 8px;border:1px solid #ddd;text-align:center;color:${sc(v)};font-weight:500">${v.toFixed(1)}</td>`).join('')}
+      <td style="padding:5px 8px;border:1px solid #ddd;text-align:center;font-weight:bold;color:${sc(tot)}">${tot.toFixed(1)}</td></tr>`;
+  });
+  const weak=Object.entries(da).sort((a,b)=>a[1]-b[1])[0];
+  const strong=Object.entries(da).sort((a,b)=>b[1]-a[1])[0];
+  const dimN={saker:'Saker',satt:'Sätt',samhalle:'Samhälle'};
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8">
+<style>body{font-family:Arial,sans-serif;max-width:900px;margin:40px auto;color:#2c2020;}
+h1{color:#064564;font-size:20px;}h2{color:#064564;font-size:15px;margin-top:22px;}
+table{border-collapse:collapse;width:100%;margin:10px 0;}
+th{background:#064564;color:#fff;padding:6px 8px;font-size:11px;text-align:left;}
+.sc{display:inline-block;padding:5px 14px;border-radius:6px;font-size:15px;font-weight:bold;margin-right:7px;}
+</style></head><body>
+<h1>AI-kompassen – analysunderlag per bibliotek</h1>
+<p style="font-size:12px;color:#888">Bibliotekschefer · Region Uppsala · 22 april 2025 · ${libs.length} bibliotek · ${parsedData.length} respondenter</p>
+<hr style="border:none;border-top:3px solid #ceac86;margin:14px 0">
+<h2>Dimensionssnitt</h2>
+<div>
+  <span class="sc" style="background:#e0eff6;color:#064564">Saker: ${da.saker.toFixed(1)}</span>
+  <span class="sc" style="background:#faf4ed;color:#7a5a2a">Sätt: ${da.satt.toFixed(1)}</span>
+  <span class="sc" style="background:#f3eaee;color:#825a6e">Samhälle: ${da.samhalle.toFixed(1)}</span>
+  <span class="sc" style="background:#f5f3f0;color:#6a5e5e">Totalt: ${grand.toFixed(1)}</span>
+</div>
+<h2>Resultat per bibliotek</h2>
+<table><tr><th>Bibliotek</th>${COL_MAP.map(c=>`<th>${c.lbl}<br><span style="font-size:9px;font-weight:400">${DIMS.find(d=>d.k===c.dim).lbl}</span></th>`).join('')}<th>Totalt</th></tr>
+${rows}</table>
+<h2>Nyckeliakttagelser</h2>
+<ul style="font-size:12px;line-height:1.8">
+  <li>Svagaste dimension: ${dimN[weak[0]]} (${weak[1].toFixed(1)} / 5.0)</li>
+  <li>Starkaste dimension: ${dimN[strong[0]]} (${strong[1].toFixed(1)} / 5.0)</li>
+  <li>Antal respondenter: ${parsedData.length} från ${libs.length} bibliotek</li>
+  <li>Totalt snitt: ${grand.toFixed(1)} / 5.0</li>
+</ul>
+<p style="font-size:10px;color:#aaa;margin-top:28px">Genererat från AI-kompassen · JMS dig/it/all AB · Jonna Steinrud</p>
+</body></html>`;
+  const blob=new Blob([html],{type:'application/msword'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='AI-kompassen-analys-Uppsala.doc';a.click();
+}
+
 // ── MODAL ───────────────────────────────────────────────────────────────────
 const MODAL_KEY = 'aikomp_modal_seen';
 function closeModal(){
@@ -780,10 +1338,8 @@ function initModal(){
 load();
 initModal();
 buildMatrix();
-renderMatrix();
 buildAreas();
 buildProgram();
-setInterval(()=>{const prev=JSON.stringify(votes);load();if(JSON.stringify(votes)!==prev)renderMatrix();},7000);
 </script>
 </body>
 </html>
