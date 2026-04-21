@@ -127,7 +127,7 @@ main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
 @media(max-width:700px){
   .chead,.mrow { grid-template-columns:80px repeat(3,1fr);gap:4px; }
   .mcell { padding:9px 8px; }
-  .cdesc { display:none; }
+  
   .rlbl { border-right:2px solid var(--border); }
 }
 
@@ -635,12 +635,15 @@ main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
      PANEL 4 – DOKUMENTATION
 ══════════════════════════════════ -->
 <div class="panel" id="tab-dok">
-  <p class="padlet-intro">Det gemensamma boardet – använd det under <strong>sekvens 5 och 6</strong> för att samla insikter, prioriteringar och nästa steg. Allt som skrivs här sparas och kan delas med uppdragsgivaren efteråt.</p>
-  <div class="padlet-wrap">
-    <iframe src="https://padlet.com/embed/rs1edbid4uki9ptp" allow="camera;microphone;geolocation" loading="lazy"></iframe>
+  <p class="padlet-intro">Menti används under <strong>sekvens 2–4</strong> för skattningar och gruppdokumentation, och under <strong>sekvens 5</strong> för att visa analysresultaten.</p>
+
+  <div style="position:relative;padding-bottom:56.25%;padding-top:35px;height:0;overflow:hidden;border-radius:12px;">
+    <iframe sandbox="allow-popups allow-scripts allow-same-origin allow-presentation"
+      allowfullscreen="true" allowtransparency="true" frameborder="0"
+      src="https://www.mentimeter.com/app/presentation/alevwyax22qev8735z5h932qm48fiqcs/embed"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;"></iframe>
   </div>
 </div>
-
 <!-- ══════════════════════════════════
      PANEL 2 – KUNSKAPSUNDERLAG
 ══════════════════════════════════ -->
@@ -705,47 +708,47 @@ const CELLS = [
     desc:'Välja, använda och värdera AI-drivna verktyg i biblioteksarbetet – och känna igen när resultaten inte håller.',
     tag:'DigComp 1.1 · 1.2', areaId:0 },
   { id:'med_sa', row:'Medarbetare', col:'Sätt',     colCls:'col-satt',
-    title:'Jag skapar AI-genererat innehåll och granskar det kritiskt',
-    desc:'Skapa och omarbeta digitalt innehåll med AI – och granska det kritiskt innan det används eller delas.',
+    title:'Jag skapar innehåll med AI och granskar det kritiskt',
+    desc:'Använda AI som hjälpmedel i innehållsskapandet och ansvara själv för att det som publiceras håller.',
     tag:'DigComp 3.1 · 3.2', areaId:2 },
   { id:'med_m',  row:'Medarbetare', col:'Samhälle', colCls:'col-samh',
-    title:'Jag möter besökare med frågor om AI och digital vardag',
-    desc:'Möta besökare tryggt när de har frågor om AI – och koppla svaren till bibliotekets demokratiuppdrag.',
+    title:'Jag möter besökare med frågor om AI och informationssökning',
+    desc:'Använda sin informationskunnighet när besökare behöver hjälp att söka, värdera och använda information i en AI-präglad vardag.',
     tag:'DigComp 2.3 · 4.2', areaId:1 },
 
   // RAD 2 – AVANCERAD: stödjer andras lärande, anpassar sin praktik
   { id:'adv_s',  row:'Specialister och arbetsledare', col:'Saker',    colCls:'col-saker',
-    title:'Vi har infrastruktur och riktlinjer för trygg AI-användning',
-    desc:'Bedöma vad verksamheten behöver, välja lämpliga AI-lösningar och ge personalen förutsättningar att använda dem tryggt.',
+    title:'Vi skapar förutsättningar för trygg AI-användning',
+    desc:'Kartlägga vad verksamheten behöver, bidra till riktlinjer och ge personalen handlingsutrymme att använda AI tryggt.',
     tag:'DigComp 5.2 · 4.2', areaId:4 },
   { id:'adv_sa', row:'Specialister och arbetsledare', col:'Sätt',     colCls:'col-satt',
     title:'Jag arbetar systematiskt med andras kompetensutveckling kring AI',
     desc:'Förstå kollegors kompetensbehov, planera lärtillfällen och stödja andras självständiga AI-användning.',
     tag:'DigComp 5.4', areaId:4 },
   { id:'adv_m',  row:'Specialister och arbetsledare', col:'Samhälle', colCls:'col-samh',
-    title:'Vi har samsyn om bibliotekets roll i kommunens digitaliseringsarbete',
-    desc:'Samarbeta med kommunens övriga aktörer kring digital inkludering och föra bibliotekets perspektiv in i kommunens digitalisering.',
+    title:'Vi synliggör bibliotekets MIK-kompetens i kommunens digitaliseringsarbete',
+    desc:'Föra in bibliotekariernas kompetens inom MIK och informationskunnighet i kommunens digitaliserings- och AI-arbete.',
     tag:'DigComp 2.4 · 2.3', areaId:1 },
 
   // RAD 3 – HÖGST AVANCERAD: leder och vägleder, skapar nya lösningar
   { id:'hog_s',  row:'Ledning', col:'Saker',    colCls:'col-saker',
     title:'Biblioteket är en aktiv röst i kommunens AI-strategi',
-    desc:'Ta initiativ till nya lösningar, föra bibliotekets röst in i kommunala beslut om AI.',
+    desc:'Positionera biblioteket som en aktiv samarbetspart i kommunens AI-strategi och bidra till beslut som gynnar alla invånare.',
     tag:'DigComp 5.3 · 5.4', areaId:4 },
   { id:'hog_sa', row:'Ledning', col:'Sätt',     colCls:'col-satt',
     title:'Jag leder lärande om AI som håller över tid',
-    desc:'Utforma riktning för lärandet, handleda kollegor och bygga strukturer för kollegialt lärande som håller när eldsjälar slutar.',
+    desc:'Sätta riktning för verksamhetens AI-kunnighet, skapa utrymme för lärande och bygga strukturer som inte vilar på enskilda personer.',
     tag:'DigComp 5.4', areaId:4 },
   { id:'hog_m',  row:'Ledning', col:'Samhälle', colCls:'col-samh',
-    title:'Vi driver digital inkludering som en strukturfråga i samhället',
-    desc:'Leda samtal om bibliotekets demokratiska roll och hålla inkluderingsfrågan levande när AI blir vardag.',
-    tag:'Ledning · alla användargrupper · DigComp Högst avancerad', areaId:1 },
+    title:'Vi för in bibliotekets MIK-perspektiv i kommunens AI-strategi och samhällsdialog',
+    desc:'Positionera bibliotekets samlade MIK-kompetens – informationskunnighet, källkritik, digital kompetens – som ett nödvändigt bidrag när kommunen formar sin AI-strategi.',
+    tag:'DigComp 2.3 · 4.3', areaId:1 },
 ];
 
 const AREAS = [
   { id:0, cls:'a1', nr:'Område 1', title:'Information, sökning och hantering',
     subs:'1.1 Sökning · 1.2 Värdering · 1.3 Hantering',
-    desc:'Kärnan i informationskunnigheten – och det område AI förändrar mest. Söktjänster är i grunden AI-drivna.',
+    desc:'Informationskunnigheten är bibliotekariens kärnkompetens och bibliotekets särskilda bidrag till MIK-arbetet. Det är också det område AI förändrar mest – söktjänster är i grunden AI-drivna.',
     comps:[
       { id:'1.1', name:'Sökning och filtrering', ai:'e', desc:'Identifiera AI-drivna vs traditionella söktjänster. Formulera effektiva sökfrågor och instruktioner till AI.' },
       { id:'1.2', name:'Värdering av information', ai:'e', desc:'Källkritik i AI-genererat innehåll. Bedöma trovärdighet i AI-genererade svar.' },
@@ -952,7 +955,7 @@ const PROGRAM = [
     desc:'Vi utforskar AI-verktyg i bibliotekssammanhang – vad de kan göra, vad de inte kan, och vad organisationen behöver ha på plats. Live-exempel: Jonna visar ett AI-verktyg live och ställer frågan: vad behöver ni veta som chefer för att ta ställning till det här?',
     tag:'Medarbetare · Specialister och arbetsledare · Ledning · DigComp 1.1–5.2',
     qs:[
-      'Vilka förutsättningar behöver medarbetare för att kunna använda AI-verktyg tryggt i vardagen?',
+      'Vilket AI-verktyg har din personal börjat använda – och vet du om det?',
       'Vad behöver specialister och arbetsledare för att kunna stödja kollegor i verktygsfrågor?',
       'Vad behöver finnas på plats i er organisation för att AI-användning i biblioteksarbetet ska vara systematisk snarare än personberoende?',
     ]},
@@ -962,7 +965,7 @@ const PROGRAM = [
     desc:'Från enskilt experimenterande till organisatorisk förmåga. Vi tittar på vad systematisk AI-kompetensutveckling innebär – av alla tre användargrupper. Live-exempel: AI formulerar konkreta kompetensmål från er biblioteksplan och DigComp.',
     tag:'Specialister och arbetsledare · DigComp Avancerad · utan eldsjälsberoende',
     qs:[
-      'Vilka förutsättningar behöver medarbetare för att lära sig och tillämpa AI i sitt arbete?',
+      'Vilket MIK-arbete sker i er verksamhet i dag som inte syns utanför den egna gruppen?',
       'Hur skapar specialister och arbetsledare strukturer för kollegialt lärande – utan eldsjälsberoende?',
       'Vilket ansvar behöver ledningen ta för att kompetensutveckling faktiskt sker och följs upp?',
       'Hur skapar vi samsyn i chefsgruppen om vad som behövs – och vem som ansvarar?',
@@ -973,13 +976,13 @@ const PROGRAM = [
 
   { type:'seq',   startH:13, startM:15, endH:14, endM:15,
     nr:'Sekvens 4', title:'Spår 3: AI och demokrati – samhälle',
-    desc:'Vi rör oss från det interna till det externa: bibliotekets demokratiuppdrag när AI förändrar medborgarnas informationsmiljö. Aktuellt: Svensk biblioteksförenings valplattform 2026 föreslår 100 mkr/år till folkbiblioteken för AI-arbete med invånarna. Live-exempel: AI tar fram presentationsunderlag till nämnden.',
-    tag:'Ledning · alla användargrupper · valplattform 2026',
+    desc:'Vi rör oss från det interna till det externa: bibliotekets MIK-kompetens och informationskunnighet som nödvändigt bidrag när AI förändrar informationsmiljön. Aktuellt: Svensk biblioteksförenings valplattform 2026 föreslår 100 miljoner kronor per år för folkbibliotekens AI-arbete med invånarna. Live-exempel: presentationsunderlag till nämnden.',
+    tag:'MIK · informationskunnighet · Ledning · valplattform 2026',
     qs:[
       'Vilka förutsättningar behöver medarbetare för att möta besökare med frågor om AI, källkritik och integritet?',
-      'Hur synliggör specialister och arbetsledare bibliotekets demokratiuppdrag i det dagliga AI-arbetet?',
+      'Hur synliggör specialister och arbetsledare bibliotekets MIK-kompetens och informationskunnighet i det dagliga AI-arbetet?',
       'Valplattformen föreslår 100 miljoner kronor per år för folkbibliotekens AI-arbete med invånarna – vad innebär det för er roll som chefer?',
-      'Vilken gemensam berättelse behöver ni – för er organisation, för politiken och för medborgarna?',
+      'Vilken gemensam berättelse behöver ni om bibliotekets MIK-kompetens – för er organisation, för politiken och för medborgarna?',
     ]},
 
   { type:'break', startH:14, startM:15, endH:14, endM:30,
@@ -1003,7 +1006,7 @@ const PROGRAM = [
     qs:[
       'Rond 1 – Förutsättningar: Vad behöver finnas på plats internt? Vad vill ni lyfta med kommunen, regionen och staten – och hur använder ni valplattformens argument?',
       'Rond 2 – Samsyn: Vilka insikter är gruppen ense om? Formulera en till tre meningar som ni kan stå bakom gemensamt.',
-      'Rond 3 – Nästa steg: Vem gör vad, när? Vad kan du göra i din verksamhet – vad kräver gemensam handling i regionen?',
+      'Rond 3 – Nästa steg: Vem gör vad, när? Vad kan du göra i din verksamhet – vad behöver ni göra gemensamt i regionen?',
     ]},
 
   { type:'break', startH:16, startM:0,  endH:16, endM:0,
@@ -1079,14 +1082,14 @@ const LIBRARIES=['Enköping','Heby','Håbo','Knivsta','Tierp','Uppsala','Älvkar
 
 const COL_MAP=[
   {id:'med_s', dim:'saker',    lbl:'Medarbetare',             full:'Jag väljer och använder AI-verktyg som passar biblioteksuppdraget'},
-  {id:'adv_s', dim:'saker',    lbl:'Specialister/arbetsledare',full:'Vi har infrastruktur och riktlinjer för trygg AI-användning'},
+  {id:'adv_s', dim:'saker',    lbl:'Specialister/arbetsledare',full:'Vi skapar förutsättningar för trygg AI-användning'},
   {id:'hog_s', dim:'saker',    lbl:'Ledning',                 full:'Biblioteket är en aktiv röst i kommunens AI-strategi'},
-  {id:'med_sa',dim:'satt',     lbl:'Medarbetare',             full:'Jag skapar AI-genererat innehåll och granskar det kritiskt'},
+  {id:'med_sa',dim:'satt',     lbl:'Medarbetare',             full:'Jag skapar innehåll med AI och granskar det kritiskt'},
   {id:'adv_sa',dim:'satt',     lbl:'Specialister/arbetsledare',full:'Jag arbetar systematiskt med andras kompetensutveckling kring AI'},
   {id:'hog_sa',dim:'satt',     lbl:'Ledning',                 full:'Jag leder lärande om AI som håller över tid'},
-  {id:'med_m', dim:'samhalle', lbl:'Medarbetare',             full:'Jag möter besökare med frågor om AI och digital vardag'},
-  {id:'adv_m', dim:'samhalle', lbl:'Specialister/arbetsledare',full:'Vi har samsyn om bibliotekets roll i kommunens digitaliseringsarbete'},
-  {id:'hog_m', dim:'samhalle', lbl:'Ledning',                 full:'Vi driver digital inkludering som en strukturfråga i samhället'},
+  {id:'med_m', dim:'samhalle', lbl:'Medarbetare',             full:'Jag möter besökare med frågor om AI och informationssökning'},
+  {id:'adv_m', dim:'samhalle', lbl:'Specialister/arbetsledare',full:'Vi synliggör bibliotekets MIK-kompetens i kommunens digitaliseringsarbete'},
+  {id:'hog_m', dim:'samhalle', lbl:'Ledning',                 full:'Vi för in bibliotekets MIK-perspektiv i kommunens AI-strategi och samhällsdialog'},
 ];
 
 const DIMS=[
