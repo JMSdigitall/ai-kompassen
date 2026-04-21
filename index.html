@@ -541,7 +541,7 @@ main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
      PANEL 1 – RÖSTNINGSMATRIS
 ══════════════════════════════════ -->
 <div class="panel active" id="tab-matris">
-  <p class="matrix-intro">Kartan visar vem som behöver vilka förutsättningar för AI-kunnighet i bibliotekssammanhang. Raderna visar användargrupp, kolumnerna visar dimension. <strong>Klicka på en DigComp-etikett</strong> i radlabeln eller på en tagg i cellen för att fördjupa dig i kunskapsunderlaget.</p>
+  <p class="matrix-intro">Raderna visar användargrupp, kolumnerna visar dimension. <strong>Klicka på en DigComp-etikett</strong> vid radrubriken eller på en tagg i cellen för att fördjupa dig i kunskapsunderlaget.</p>
   <div class="chead">
     <div></div>
     <div class="ch ch1"><span class="chico">⚙</span>Saker<div class="chsub">tekniken</div></div>
@@ -703,43 +703,43 @@ const CELLS = [
   // RAD 1 – MEDEL: löser uppgifter självständigt, väljer rätt verktyg, utvärderar kritiskt
   { id:'med_s',  row:'Medarbetare', col:'Saker',    colCls:'col-saker',
     title:'Jag väljer och använder AI-verktyg som passar biblioteksuppdraget',
-    desc:'Självständigt söka, filtrera och värdera information med AI-drivna verktyg – och kunna skilja relevanta resultat från irrelevanta.',
+    desc:'Välja, använda och värdera AI-drivna verktyg i biblioteksarbetet – och känna igen när resultaten inte håller.',
     tag:'DigComp 1.1 · 1.2', areaId:0 },
   { id:'med_sa', row:'Medarbetare', col:'Sätt',     colCls:'col-satt',
-    title:'Jag skapar och granskar AI-genererat innehåll kritiskt',
-    desc:'Självständigt skapa och omarbeta digitalt innehåll med AI – och tillämpa källkritik på det som genereras.',
+    title:'Jag skapar AI-genererat innehåll och granskar det kritiskt',
+    desc:'Skapa och omarbeta digitalt innehåll med AI – och granska det kritiskt innan det används eller delas.',
     tag:'DigComp 3.1 · 3.2', areaId:2 },
   { id:'med_m',  row:'Medarbetare', col:'Samhälle', colCls:'col-samh',
     title:'Jag möter besökare med frågor om AI och digital vardag',
-    desc:'Självständigt hantera frågor om AI utifrån bibliotekets demokratiuppdrag – med kunskap om integritet och persondata.',
+    desc:'Möta besökare tryggt när de har frågor om AI – och koppla svaren till bibliotekets demokratiuppdrag.',
     tag:'DigComp 2.3 · 4.2', areaId:1 },
 
   // RAD 2 – AVANCERAD: stödjer andras lärande, anpassar sin praktik
   { id:'adv_s',  row:'Specialister och arbetsledare', col:'Saker',    colCls:'col-saker',
     title:'Vi har infrastruktur och riktlinjer för trygg AI-användning',
-    desc:'Bedöma verksamhetens behov, identifiera lämpliga AI-lösningar och skapa förutsättningar för att andra ska kunna använda dem tryggt.',
+    desc:'Bedöma vad verksamheten behöver, välja lämpliga AI-lösningar och ge personalen förutsättningar att använda dem tryggt.',
     tag:'DigComp 5.2 · 4.2', areaId:4 },
   { id:'adv_sa', row:'Specialister och arbetsledare', col:'Sätt',     colCls:'col-satt',
-    title:'Jag stödjer andras kompetensutveckling kring AI systematiskt',
-    desc:'Kartlägga kollegors kompetensbehov, sammanställa lärtillfällen och stödja andras självständighet i digitala miljöer.',
+    title:'Jag arbetar systematiskt med andras kompetensutveckling kring AI',
+    desc:'Förstå kollegors kompetensbehov, planera lärtillfällen och stödja andras självständiga AI-användning.',
     tag:'DigComp 5.4', areaId:4 },
   { id:'adv_m',  row:'Specialister och arbetsledare', col:'Samhälle', colCls:'col-samh',
     title:'Vi har samsyn om bibliotekets roll i kommunens digitaliseringsarbete',
-    desc:'Samarbeta med andra aktörer kring digital inkludering och representera bibliotekets perspektiv i kommunens digitaliseringsstrategi.',
+    desc:'Samarbeta med kommunens övriga aktörer kring digital inkludering och föra bibliotekets perspektiv in i kommunens digitalisering.',
     tag:'DigComp 2.4 · 2.3', areaId:1 },
 
   // RAD 3 – HÖGST AVANCERAD: leder och vägleder, skapar nya lösningar
   { id:'hog_s',  row:'Ledning', col:'Saker',    colCls:'col-saker',
     title:'Biblioteket är en aktiv röst i kommunens AI-strategi',
-    desc:'Leda utvecklingen av nya lösningar, synliggöra biblioteket som AI-kunnig aktör och bidra till strategiska beslut på kommunal nivå.',
+    desc:'Ta initiativ till nya lösningar, föra bibliotekets röst in i kommunala beslut om AI.',
     tag:'DigComp 5.3 · 5.4', areaId:4 },
   { id:'hog_sa', row:'Ledning', col:'Sätt',     colCls:'col-satt',
     title:'Jag leder lärande om AI som håller över tid',
-    desc:'Utforma lärmaterial, mentora kollegor och bygga strukturer för kollegialt lärande som inte är beroende av enskilda eldsjälar.',
+    desc:'Utforma riktning för lärandet, handleda kollegor och bygga strukturer för kollegialt lärande som håller när eldsjälar slutar.',
     tag:'DigComp 5.4', areaId:4 },
   { id:'hog_m',  row:'Ledning', col:'Samhälle', colCls:'col-samh',
     title:'Vi driver digital inkludering som en strukturfråga i samhället',
-    desc:'Leda samtal om bibliotekets demokratiska roll, forma gemensamma berättelser och hålla inkluderingsperspektivet levande när AI normaliseras.',
+    desc:'Leda samtal om bibliotekets demokratiska roll och hålla inkluderingsfrågan levande när AI blir vardag.',
     tag:'Ledning · alla användargrupper · DigComp Högst avancerad', areaId:1 },
 ];
 
@@ -748,8 +748,8 @@ const AREAS = [
     subs:'1.1 Sökning · 1.2 Värdering · 1.3 Hantering',
     desc:'Kärnan i informationskunnigheten – och det område AI förändrar mest. Söktjänster är i grunden AI-drivna.',
     comps:[
-      { id:'1.1', name:'Sökning och filtrering', ai:'e', desc:'Identifiera AI-drivna vs traditionella söktjänster. Formulera effektiva sökfrågor och prompts.' },
-      { id:'1.2', name:'Värdering av information', ai:'e', desc:'Källkritik i AI-genererat innehåll. Bedöma trovärdighet i AI-output.' },
+      { id:'1.1', name:'Sökning och filtrering', ai:'e', desc:'Identifiera AI-drivna vs traditionella söktjänster. Formulera effektiva sökfrågor och instruktioner till AI.' },
+      { id:'1.2', name:'Värdering av information', ai:'e', desc:'Källkritik i AI-genererat innehåll. Bedöma trovärdighet i AI-genererade svar.' },
       { id:'1.3', name:'Hantering av information', ai:'i', desc:'Organisera, lagra och analysera information med digitala verktyg.' },
     ]},
   { id:1, cls:'a2', nr:'Område 2', title:'Kommunikation och samarbete',
@@ -759,7 +759,7 @@ const AREAS = [
       { id:'2.1', name:'Interaktion', ai:'e', desc:'Interagera med och via digitala tekniker – inkl. konversation med AI-system.' },
       { id:'2.2', name:'Delning', ai:'i', desc:'Dela information etiskt och ansvarsfullt, inkl. AI-genererat innehåll.' },
       { id:'2.3', name:'Medborgarperspektiv', ai:'i', desc:'Delta i samhället via digitala plattformar. Hävda sina rättigheter i digitala miljöer.' },
-      { id:'2.4', name:'Samarbete', ai:'i', desc:'Samskapande och kollaborativt arbete med digitala tekniker.' },
+      { id:'2.4', name:'Samarbete', ai:'i', desc:'Samskapande och samarbetsinriktat arbete med digitala tekniker.' },
       { id:'2.5', name:'Digitalt beteende', ai:'i', desc:'Normer för respektfullt beteende i digitala miljöer.' },
       { id:'2.6', name:'Digital identitet', ai:'i', desc:'Hantera sin digitala identitet och digitalt fotavtryck.' },
     ]},
@@ -768,7 +768,7 @@ const AREAS = [
     desc:'Generativ AI lyfts fram explicit – att skapa, omarbeta och förstå upphovsrätt i AI-eran är centralt för bibliotekspersonal.',
     comps:[
       { id:'3.1', name:'Skapa digitalt innehåll', ai:'e', desc:'Använda digitala tekniker etiskt för att skapa och redigera – inkl. generativ AI.' },
-      { id:'3.2', name:'Omarbeta och integrera', ai:'e', desc:'Förbättra och integrera AI-genererat innehåll i befintliga kunskapskroppar.' },
+      { id:'3.2', name:'Omarbeta och integrera', ai:'e', desc:'Förbättra och integrera AI-genererat innehåll i befintliga texter och dokument.' },
       { id:'3.3', name:'Upphovsrätt och licenser', ai:'e', desc:'Förstå upphovsrätt i relation till AI-genererat material.' },
       { id:'3.4', name:'Programmering', ai:'i', desc:'Förstå hur instruktioner till datorsystem fungerar – inkl. hur AI tränas.' },
     ]},
@@ -778,7 +778,7 @@ const AREAS = [
     comps:[
       { id:'4.1', name:'Enheter och digitala miljöer', ai:'i', desc:'Skydda enheter och förstå säkerhetsrisker i digitala miljöer.' },
       { id:'4.2', name:'Persondata och integritet', ai:'e', desc:'Förstå hur AI-system hanterar persondata. GDPR och AI Act.' },
-      { id:'4.3', name:'Välmående', ai:'i', desc:'Balansera teknikvanor och bevara välmående i AI-genomsyrade arbetsmiljöer.' },
+      { id:'4.3', name:'Välmående', ai:'i', desc:'Värna välmående och balansera teknikvanor i AI-genomsyrade arbetsmiljöer.' },
       { id:'4.4', name:'Miljöpåverkan', ai:'e', desc:'Förstå och beakta AI-systemens miljö- och energiavtryck.' },
     ]},
   { id:4, cls:'a5', nr:'Område 5', title:'Problemidentifiering och lösning',
@@ -940,7 +940,7 @@ const PROGRAM = [
     desc:'Vi börjar i det konkreta: vad finns i er vardag redan? Därifrån rör vi oss till DigComp 3.0 som gemensamt språk för att sätta ord på det ni redan gör – och det som saknas. Live-exempel: AI omvandlar DigComp 3.0 till en visuell översikt.',
     tag:'Matris · alla tre användargrupper · konkret till strategisk',
     qs:[
-      'Var befinner sig er personal i dag – på vilka nivåer i matrisen?',
+      'Var befinner er personal sig i dag – på vilka nivåer i matrisen?',
       'Var befinner du dig som chef?',
       'Vilken nivå är rimlig att sikta på – för personal, för chefer – och över vilken tidshorisont?',
     ]},
@@ -1082,8 +1082,8 @@ const COL_MAP=[
   {id:'med_s', dim:'saker',    lbl:'Medarbetare',             full:'Jag väljer och använder AI-verktyg som passar biblioteksuppdraget'},
   {id:'adv_s', dim:'saker',    lbl:'Specialister/arbetsledare',full:'Vi har infrastruktur och riktlinjer för trygg AI-användning'},
   {id:'hog_s', dim:'saker',    lbl:'Ledning',                 full:'Biblioteket är en aktiv röst i kommunens AI-strategi'},
-  {id:'med_sa',dim:'satt',     lbl:'Medarbetare',             full:'Jag skapar och granskar AI-genererat innehåll kritiskt'},
-  {id:'adv_sa',dim:'satt',     lbl:'Specialister/arbetsledare',full:'Jag stödjer andras kompetensutveckling kring AI systematiskt'},
+  {id:'med_sa',dim:'satt',     lbl:'Medarbetare',             full:'Jag skapar AI-genererat innehåll och granskar det kritiskt'},
+  {id:'adv_sa',dim:'satt',     lbl:'Specialister/arbetsledare',full:'Jag arbetar systematiskt med andras kompetensutveckling kring AI'},
   {id:'hog_sa',dim:'satt',     lbl:'Ledning',                 full:'Jag leder lärande om AI som håller över tid'},
   {id:'med_m', dim:'samhalle', lbl:'Medarbetare',             full:'Jag möter besökare med frågor om AI och digital vardag'},
   {id:'adv_m', dim:'samhalle', lbl:'Specialister/arbetsledare',full:'Vi har samsyn om bibliotekets roll i kommunens digitaliseringsarbete'},
