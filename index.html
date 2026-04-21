@@ -187,6 +187,7 @@ main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
 .lhd { padding:9px 12px;font-size:.73rem;font-weight:500; }
 .lbd { padding:9px 12px;font-size:.7rem;color:var(--muted);line-height:1.6; }
 .ltag { display:inline-block;background:var(--off);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:.58rem;margin-top:3px;color:var(--muted); }
+.lcard.sel-level { outline:3px solid var(--teal);box-shadow:0 0 0 3px var(--teal-light);transition:outline .15s; }
 .lh1{background:#d3f5e9;color:#085041;} .lh2{background:#faeeda;color:#7a5a2a;border-bottom:2px solid var(--sand);}
 .lh3{background:var(--malva-l);color:#4b1528;border-bottom:2px solid var(--malva);} .lh4{background:var(--teal);color:#e1f5ee;}
 
@@ -675,9 +676,9 @@ main { max-width:1100px;margin:0 auto;padding:1.5rem 1rem 4rem; }
     <div class="acc-body">
       <div class="lvl-grid">
         <div class="lcard" style="opacity:.45;border-style:dashed;"><div class="lhd lh1">Grundläggande</div><div class="lbd">Ingångsnivå – inte fokus för denna dag.<br><span class="ltag">Startpunkt</span> <span class="ltag">29 % av lärandemål</span></div></div>
-        <div class="lcard"><div class="lhd lh2">Medel</div><div class="lbd">Löser rutinproblem självständigt. Väljer rätt verktyg efter behov. Utvärderar AI-resultat kritiskt.<br><span class="ltag">Självständigt</span> <span class="ltag">32 % av lärandemål</span></div></div>
-        <div class="lcard"><div class="lhd lh3">Avancerad</div><div class="lbd">Hanterar komplexa situationer. Stödjer andras kompetensutveckling. Anpassar sin praktik efter ny teknik.<br><span class="ltag">Stödjer andra</span> <span class="ltag">23 % av lärandemål</span></div></div>
-        <div class="lcard"><div class="lhd lh4">Högst avancerad</div><div class="lbd" style="color:var(--muted)">Löser komplexa problem. Skapar nya lösningar, leder och vägleder andra.<br><span class="ltag">Leder och vägleder</span> <span class="ltag">16 % av lärandemål</span></div></div>
+        <div class="lcard" id="lcard-medel"><div class="lhd lh2">Medel</div><div class="lbd">Löser rutinproblem självständigt. Väljer rätt verktyg efter behov. Utvärderar AI-resultat kritiskt.<br><span class="ltag">Självständigt</span> <span class="ltag">32 % av lärandemål</span></div></div>
+        <div class="lcard" id="lcard-adv"><div class="lhd lh3">Avancerad</div><div class="lbd">Hanterar komplexa situationer. Stödjer andras kompetensutveckling. Anpassar sin praktik efter ny teknik.<br><span class="ltag">Stödjer andra</span> <span class="ltag">23 % av lärandemål</span></div></div>
+        <div class="lcard" id="lcard-hog"><div class="lhd lh4">Högst avancerad</div><div class="lbd" style="color:var(--muted)">Löser komplexa problem. Skapar nya lösningar, leder och vägleder andra.<br><span class="ltag">Leder och vägleder</span> <span class="ltag">16 % av lärandemål</span></div></div>
       </div>
       <div class="ai-note">
         <div class="ai-badges">
@@ -802,9 +803,9 @@ function vt(id){ return (votes[id]||[]).reduce((a,b)=>a+(b||0),0); }
 
 // ── BUILD MATRIS ──────────────────────────────────────────────────────────────
 const ROW_BADGE = {
-  'Medarbetare':             { cls:'rb-medel', label:'DigComp Medel',          areaId:4 },
-  'Specialister och arbetsledare': { cls:'rb-adv',   label:'DigComp Avancerad',      areaId:4 },
-  'Ledning':                 { cls:'rb-hog',   label:'DigComp Högst avancerad',areaId:4 },
+  'Medarbetare':             { cls:'rb-medel', label:'DigComp Medel',          areaId:4, levelId:'medel' },
+  'Specialister och arbetsledare': { cls:'rb-adv',   label:'DigComp Avancerad',      areaId:4, levelId:'adv' },
+  'Ledning':                 { cls:'rb-hog',   label:'DigComp Högst avancerad',areaId:4, levelId:'hog' },
 };
 
 function buildMatrix(){
@@ -814,7 +815,7 @@ function buildMatrix(){
     const badge = ROW_BADGE[row] || {};
     div.innerHTML=`<div class="rlbl">
       <div class="rlbl-t">${row}</div>
-      ${badge.cls ? `<span class="rlbl-badge ${badge.cls}" onclick="openKuArea(${badge.areaId||4},event)" style="cursor:pointer" title="Öppna i kunskapsunderlaget">${badge.label} ↗</span>` : ''}
+      ${badge.cls ? `<span class="rlbl-badge ${badge.cls}" data-levelid="${badge.levelId||''}" style="cursor:pointer" title="Öppna kunskapsnivåer">${badge.label} ↗</span>` : ''}
     </div>`;
     CELLS.filter(cell=>cell.row===row).forEach(cell=>{
       const el=document.createElement('div');
@@ -882,6 +883,35 @@ function openKuArea(areaId, event){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+function openKuLevels(event, levelId){
+  if(event) event.stopPropagation();
+  // Byt till KU-fliken
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-ku').classList.add('active');
+  document.querySelectorAll('.tbtn').forEach(b=>{
+    if(b.textContent.trim()==='Kunskapsunderlag') b.classList.add('active');
+  });
+  // Stäng alla accordions, öppna nivå-accordionen (index 1)
+  const accBtns = document.querySelectorAll('.acc-hdr');
+  accBtns.forEach(h=>{h.classList.remove('open');h.nextElementSibling.classList.remove('open');});
+  if(accBtns[1]){ accBtns[1].classList.add('open'); accBtns[1].nextElementSibling.classList.add('open'); }
+  // Markera rätt nivåkort
+  if(levelId) setTimeout(()=>selectLevel(levelId), 250);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function selectLevel(levelId){
+  document.querySelectorAll('.lcard').forEach(c=>c.classList.remove('sel-level'));
+  const el = document.getElementById('lcard-'+levelId);
+  if(!el) return;
+  el.classList.add('sel-level');
+  // Scrolla accordion-body om den finns, annars hela sidan
+  const body = el.closest('.acc-body');
+  if(body){ body.scrollTop = el.offsetTop - 16; }
+  el.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
 // ── ACCORDION ─────────────────────────────────────────────────────────────────
 function toggleAcc(btn){
   const body=btn.nextElementSibling;
@@ -903,70 +933,80 @@ function showTab(id,btn){
 const PROGRAM = [
   { type:'break', startH:9,  startM:0,  endH:9,  endM:30,
     title:'Välkomna och introduktion',
-    desc:'AI-kompassen presenteras. Praktisk info om dagen och om verktygen vi använder.' },
+    desc:'AI-kompassen presenteras. Praktisk info om dagen, om matrisen och om de verktyg vi använder.' },
+
   { type:'seq',   startH:9,  startM:30, endH:10, endM:15,
-    nr:'Sekvens 1', title:'Vad är AI-kunnighet?',
-    desc:'DigComp 3.0 som gemensamt kartspråk. Fem kompetensområden och fyra nivåer. Live-exempel: AI genererar en infografik över ramverket.',
-    tag:'Matris · alla tre användargrupper',
+    nr:'Sekvens 1', title:'Vad möter vi redan – och vad är AI-kunnighet?',
+    desc:'Vi börjar i det konkreta: vad finns i er vardag redan? Därifrån rör vi oss till DigComp 3.0 som gemensamt språk för att sätta ord på det ni redan gör – och det som saknas. Live-exempel: AI omvandlar DigComp 3.0 till en visuell översikt.',
+    tag:'Matris · alla tre användargrupper · konkret till strategisk',
     qs:[
-      'Var befinner sig er personal i dag – på vilka nivåer i ramverket?',
+      'Var befinner sig er personal i dag – på vilka nivåer i matrisen?',
       'Var befinner sig du som chef?',
       'Vilken nivå är rimlig att sikta på – för personal, för chefer – och över vilken tidshorisont?',
     ]},
+
   { type:'break', startH:10, startM:15, endH:10, endM:30,
     title:'Fika', desc:'' },
+
   { type:'seq',   startH:10, startM:30, endH:11, endM:30,
-    nr:'Sekvens 2', title:'Saker – verktyg och infrastruktur',
-    desc:'Vilka AI-tjänster finns i verksamhetens vardag? Vad kräver ledarskapet? Live-exempel: AI jämför biblioteksplaner från Uppsala-länet.',
-    tag:'Specialister och arbetsledare · Ledning · DigComp Avancerad–Högst avancerad',
+    nr:'Sekvens 2', title:'Spår 1: Att biblioteka AI – saker',
+    desc:'Vi utforskar AI-verktyg i bibliotekssammanhang – vad de kan göra, vad de inte kan, och vad som krävs av organisationen. Live-exempel: Jonna visar ett AI-verktyg live och ställer frågan: vad behöver ni veta som chefer för att ta ställning till det här?',
+    tag:'Medarbetare · Specialister och arbetsledare · Ledning · DigComp 1.1–5.2',
     qs:[
       'Vilka förutsättningar behöver medarbetare för att kunna använda AI-verktyg tryggt i vardagen?',
       'Vad behöver specialister och arbetsledare för att kunna stödja kollegor i verktygsfrågor?',
-      'Vilket mandat behöver ledningen ta för riktlinjer och infrastruktur – och vem driver det?',
+      'Vad behöver finnas på plats i er organisation för att AI-användning i biblioteksarbetet ska vara systematisk snarare än personberoende?',
     ]},
+
   { type:'seq',   startH:11, startM:30, endH:12, endM:15,
-    nr:'Sekvens 3', title:'Sätt – kompetensutveckling i samsyn',
-    desc:'Hur leder vi utan eldsjälsberoende? Samsyn som processfråga. Live-exempel: AI formulerar kompetensmål från biblioteksplan och DigComp.',
-    tag:'Specialister och arbetsledare · DigComp Avancerad',
+    nr:'Sekvens 3', title:'Spår 2: MIK i AI-eran – sätt',
+    desc:'Från enskilt experimenterande till organisatorisk förmåga. Vi tittar på vad systematisk AI-kompetensutveckling kräver – av alla tre användargrupper. Live-exempel: AI formulerar konkreta kompetensmål från er biblioteksplan och DigComp.',
+    tag:'Specialister och arbetsledare · DigComp Avancerad · utan eldsjälsberoende',
     qs:[
       'Vilka förutsättningar behöver medarbetare för att lära sig och tillämpa AI i sitt arbete?',
       'Hur skapar specialister och arbetsledare strukturer för kollegialt lärande – utan eldsjälsberoende?',
       'Vilket ansvar behöver ledningen ta för att kompetensutveckling faktiskt sker och följs upp?',
       'Hur skapar vi samsyn i chefsgruppen om vad som krävs – och av vem?',
     ]},
+
   { type:'break', startH:12, startM:15, endH:13, endM:15,
     title:'Lunch', desc:'' },
+
   { type:'seq',   startH:13, startM:15, endH:14, endM:15,
-    nr:'Sekvens 4', title:'Samhälle – demokratiuppdraget',
-    desc:'Bibliotekets roll när AI förändrar medborgarnas informationsmiljö. Live-exempel: AI tar fram presentationsunderlag till nämnden.',
-    tag:'Ledning · alla användargrupper · DigComp Högst avancerad',
+    nr:'Sekvens 4', title:'Spår 3: AI och demokrati – samhälle',
+    desc:'Vi rör oss från det interna till det externa: bibliotekets demokratiuppdrag när AI förändrar medborgarnas informationsmiljö. Aktuellt: Svensk biblioteksförenings valplattform 2026 föreslår 100 mkr/år till folkbiblioteken för AI-arbete med invånarna. Live-exempel: AI tar fram presentationsunderlag till nämnden.',
+    tag:'Ledning · alla användargrupper · valplattform 2026',
     qs:[
-      'Vilka förutsättningar behöver medarbetare för att möta besökare med frågor om AI och demokrati?',
-      'Hur understödjer specialister och arbetsledare att bibliotekets demokratiuppdrag är synligt i verksamheten?',
-      'Vilket mandat behöver ledningen ta för att positionera biblioteket i kommunens AI-strategi?',
-      'Vilken gemensam berättelse behöver vi – för oss själva, för politiken och för medborgarna?',
+      'Vilka förutsättningar behöver medarbetare för att möta besökare med frågor om AI, källkritik och integritet?',
+      'Hur synliggör specialister och arbetsledare bibliotekets demokratiuppdrag i det dagliga AI-arbetet?',
+      'Valplattformen föreslår 100 miljoner kronor per år för folkbibliotekens AI-arbete med invånarna – vad innebär det för er roll som chefer?',
+      'Vilken gemensam berättelse behöver ni – för er organisation, för politiken och för medborgarna?',
     ]},
+
   { type:'break', startH:14, startM:15, endH:14, endM:30,
     title:'Fika', desc:'' },
+
   { type:'seq',   startH:14, startM:30, endH:15, endM:0,
     nr:'Sekvens 5', title:'Analysresultaten – vad berättar datan?',
-    desc:'Gemensam genomgång av Menti-resultaten per bibliotek och dimension. Heatmap och mönster visas i analyspanelen.',
-    tag:'Analys · DigComp-nivåer · Gidlund',
+    desc:'Gemensam genomgång av Menti-resultaten per bibliotek och dimension. Heatmap och mönster visas i analyspanelen – från konkret nuläge till gemensamma prioriteringar.',
+    tag:'Analys · Saker · Sätt · Samhälle · per användargrupp',
     qs:[
       'Vilket område – Saker, Sätt eller Samhälle – är svagast för gruppen som helhet?',
-      'Var är spridningen störst mellan biblioteken – och vad berättar det?',
+      'Var är spridningen störst mellan biblioteken – och vad berättar det om skilda förutsättningar?',
       'Vilken användargrupp – medarbetare, specialister och arbetsledare eller ledning – har störst behov av förutsättningar?',
-      'Vad är den viktigaste gemensamma iakttagelsen att ta med in i nästa sekvens?',
+      'Vad är den viktigaste gemensamma iakttagelsen att ta med in i sekvens 6?',
     ]},
+
   { type:'seq',   startH:15, startM:0,  endH:16, endM:0,
     nr:'Sekvens 6', title:'Framåt – samsyn och nästa steg',
-    desc:'Tre ronder: förutsättningar, samsyn, nästa steg. Konkreta åtaganden att ta med hem.',
-    tag:'Rond 1 · 2 · 3',
+    desc:'Tre ronder som rör sig från förutsättningar till åtaganden. Dagen landar i konkret handling – internt, regionalt och politiskt.',
+    tag:'Rond 1 · 2 · 3 · internt · regionalt · politiskt',
     qs:[
-      'Rond 1 – Förutsättningar: Vad behöver finnas på plats internt och externt? Var ligger mandatfrågorna?',
-      'Rond 2 – Samsyn: Vilka insikter är gruppen ense om? Formulera en till tre meningar.',
-      'Rond 3 – Nästa steg: Vem gör vad, när? Vad kan du göra i din verksamhet – vad kräver gemensam handling?',
+      'Rond 1 – Förutsättningar: Vad behöver finnas på plats internt? Vad behöver ni kräva av kommunen, regionen och staten – och hur använder ni valplattformens argument?',
+      'Rond 2 – Samsyn: Vilka insikter är gruppen ense om? Formulera en till tre meningar som ni kan stå bakom gemensamt.',
+      'Rond 3 – Nästa steg: Vem gör vad, när? Vad kan du göra i din verksamhet – vad kräver gemensam handling i regionen?',
     ]},
+
   { type:'break', startH:16, startM:0,  endH:16, endM:0,
     title:'Avslut', desc:'' },
 ];
@@ -1039,15 +1079,15 @@ const SCORES_KEY='aikomp_scores_v3';
 const LIBRARIES=['Enköping','Heby','Håbo','Knivsta','Tierp','Uppsala','Älvkarleby','Östhammar'];
 
 const COL_MAP=[
-  {id:'med_s', dim:'saker',    lbl:'Medel',          full:'Jag väljer och använder AI-verktyg som passar uppdraget'},
-  {id:'adv_s', dim:'saker',    lbl:'Avancerad',      full:'Vi har riktlinjer och infrastruktur för trygg AI-användning'},
-  {id:'hog_s', dim:'saker',    lbl:'Högst avancerad',full:'Biblioteket är en aktiv röst i kommunens AI-strategi'},
-  {id:'med_sa',dim:'satt',     lbl:'Medel',          full:'Jag skapar och granskar AI-genererat innehåll kritiskt'},
-  {id:'adv_sa',dim:'satt',     lbl:'Avancerad',      full:'Jag stödjer andras kompetensutveckling systematiskt'},
-  {id:'hog_sa',dim:'satt',     lbl:'Högst avancerad',full:'Jag leder lärande om AI som håller över tid'},
-  {id:'med_m', dim:'samhalle', lbl:'Medel',          full:'Jag möter besökare med frågor om AI och digital vardag'},
-  {id:'adv_m', dim:'samhalle', lbl:'Avancerad',      full:'Vi har samsyn om bibliotekets roll i digitaliseringsarbetet'},
-  {id:'hog_m', dim:'samhalle', lbl:'Högst avancerad',full:'Vi driver digital inkludering som en strukturfråga'},
+  {id:'med_s', dim:'saker',    lbl:'Medarbetare',             full:'Jag väljer och använder AI-verktyg som passar biblioteksuppdraget'},
+  {id:'adv_s', dim:'saker',    lbl:'Specialister/arbetsledare',full:'Vi har infrastruktur och riktlinjer för trygg AI-användning'},
+  {id:'hog_s', dim:'saker',    lbl:'Ledning',                 full:'Biblioteket är en aktiv röst i kommunens AI-strategi'},
+  {id:'med_sa',dim:'satt',     lbl:'Medarbetare',             full:'Jag skapar och granskar AI-genererat innehåll kritiskt'},
+  {id:'adv_sa',dim:'satt',     lbl:'Specialister/arbetsledare',full:'Jag stödjer andras kompetensutveckling kring AI systematiskt'},
+  {id:'hog_sa',dim:'satt',     lbl:'Ledning',                 full:'Jag leder lärande om AI som håller över tid'},
+  {id:'med_m', dim:'samhalle', lbl:'Medarbetare',             full:'Jag möter besökare med frågor om AI och digital vardag'},
+  {id:'adv_m', dim:'samhalle', lbl:'Specialister/arbetsledare',full:'Vi har samsyn om bibliotekets roll i kommunens digitaliseringsarbete'},
+  {id:'hog_m', dim:'samhalle', lbl:'Ledning',                 full:'Vi driver digital inkludering som en strukturfråga i samhället'},
 ];
 
 const DIMS=[
@@ -1338,6 +1378,10 @@ function initModal(){
 load();
 initModal();
 buildMatrix();
+document.getElementById('matrixRows').addEventListener('click', function(e){
+  const badge = e.target.closest('.rlbl-badge');
+  if(badge){ openKuLevels(e, badge.dataset.levelid); }
+});
 buildAreas();
 buildProgram();
 </script>
